@@ -1,0 +1,92 @@
+use asm02;
+CREATE TABLE IF NOT EXISTS Role (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  role_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS CV (
+  file_name VARCHAR(255) NOT NULL,
+  id INT PRIMARY KEY AUTO_INCREMENT
+);
+
+CREATE TABLE IF NOT EXISTS User (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  address VARCHAR(255) NOT NULL,
+  cv_id INT NOT NULL,
+  descript VARCHAR(255),
+  email VARCHAR(255) NOT NULL,
+  fullname VARCHAR(255) NOT NULL,
+  image VARCHAR(255),
+  password VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  role_id INT NOT NULL,
+  status INT NOT NULL,
+  FOREIGN KEY (cv_id) REFERENCES CV (id),
+  FOREIGN KEY (role_id) REFERENCES Role (id)
+);
+
+CREATE TABLE IF NOT EXISTS Applypost (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  created_at VARCHAR(255) NOT NULL,
+  name_cv VARCHAR(255) NOT NULL,
+  recruitment_id INT NOT NULL,
+  status INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES User (id)
+);
+
+CREATE TABLE IF NOT EXISTS Company (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  address VARCHAR(255) NOT NULL,
+  descript TEXT(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  logo TEXT(255) NOT NULL,
+  name_company VARCHAR(255)NOT NULL,
+  phone VARCHAR(255),
+  status INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES User (id)
+);
+
+CREATE TABLE IF NOT EXISTS Save_job (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  recruiment_id INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES User (id)
+);
+
+CREATE TABLE IF NOT EXISTS Folow_company (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  company_id INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (company_id) REFERENCES Company (id),
+  FOREIGN KEY (user_id) REFERENCES User (id)
+);
+
+CREATE TABLE IF NOT EXISTS Recruitment (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  address VARCHAR(255) NOT NULL,
+  category_id INT NOT NULL,
+  company_id INT NOT NULL,
+  create_at VARCHAR(255) NOT NULL,
+  deadline VARCHAR(255) NOT NULL,
+  descript VARCHAR(255) NOT NULL,
+  experience VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  salary VARCHAR(255) NOT NULL,
+  status INT NOT NULL,
+  tittle VARCHAR(255) NOT NULL,
+  FOREIGN KEY (company_id) REFERENCES Company (id),
+  FOREIGN KEY (category_id) REFERENCES Company (id)
+);
+
+CREATE TABLE IF NOT EXISTS Category (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  num_choose INT NOT NULL
+);
+
+
+	
+
+
