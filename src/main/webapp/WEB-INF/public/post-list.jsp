@@ -57,30 +57,29 @@
     
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-            <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-            <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
+          <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+          <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+          <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
+
     <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
     <!-- 
             <li th:if="${session.user}" class="nav-item"><a th:href="@{'/user/profile/'+${session.user.id}}" th:text="${session.user.fullName}" class="nav-link" ></a> -->
     
               <ul class="dropdown">
-                <li><a href="/">Hồ Sơ</a></li>
-    <!--            <li><a href="service-single.html">Đổi mật khẩu</a></li>-->
-                <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
-                <li ><a href="/user/list-post" >Danh sách bài đăng</a></li>
-                <li ><a href="/user/get-list-apply" >Công việc đã ứng tuyển</a></li>
-                <li ><a href="/user/get-list-company" >Công ty đã theo dõi</a></li>
-    <!--            <li th:if="${session.user.role.id == 2}"><a href="/auth/logout" >Ứng cử viên tiềm năng</a></li>-->
-                <li><a href="/auth/logout" >Đăng xuất</a></li>
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-save-job">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
     
               </ul>
             </li>
     
               <li></li>
     
-              <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-            <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+              <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/post-job" class="nav-link">Đăng tuyển</a></li>
+            <li class="nav-item cta cta-colored"><a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a></li>
     
           </ul>
         </div>
@@ -133,7 +132,8 @@
         </div>
     </div>
 </div>
-<section class="ftco-section bg-light" th:if="${session.user.role.id == 2 }">
+<section class="ftco-section bg-light">
+	<c:if test="${sessionScope.user.role.id == 2 }">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 pr-lg-4">
@@ -147,17 +147,17 @@
                         </div>
 
                     </th:block>
-                    <th:block th:if="${list.content.size() > 0}" th:each="recruitment : ${list.content}">
+                   	<c:forEach var="rec" items="${recruitment}">
                         <div class="col-md-12 ">
                             <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                                 <div class="one-third mb-4 mb-md-0">
                                     <div class="job-post-item-header align-items-center">
-                                        <span class="subadge" th:text="${recruitment.type}"></span>
-                                        <h2 class="mr-3 text-black" ><a th:text="${recruitment.title}" th:href="${'/recruitment/detail/'} +${recruitment.id}"></a></h2>
+                                        <span class="subadge">full time</span>
+                                        <h2 class="mr-3 text-black" ><a href="${pageContext.request.contextPath}${'/detail-post/'}${rec.id}">${rec.tittle}</a></h2>
                                     </div>
                                     <div class="job-post-item-body d-block d-md-flex">
-                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${recruitment.Company.nameCompany}" ></a></div>
-                                        <div><span class="icon-my_location"></span> <span th:text="${recruitment.address}"></span></div>
+                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#">${rec.company.name_company}</a></div>
+                                        <div><span class="icon-my_location"></span> <span>${rec.address}</span></div>
                                     </div>
                                 </div>
 
@@ -167,15 +167,15 @@
 <!--                                            <span class="icon-heart"></span>-->
 <!--                                        </a>-->
 <!--                                    </div>-->
-                                    <a th:href="${'/recruitment/detail/'} +${recruitment.id}"  class="btn btn-primary py-2 ml-2">Xem chi tiết</a>
-                                    <a th:href="${'/recruitment/editpost/'} +${recruitment.id}"  class="btn btn-warning py-2 ml-2">Cập nhật</a>
-                                    <a class="btn btn-danger py-2 ml-2" href="" data-toggle="modal" th:data-target="${'#exampleModal'} + ${recruitment.id}">Xóa</a>
+                                    <a href="${pageContext.request.contextPath}${'/detail-post/'}${rec.id}"  class="btn btn-primary py-2 ml-2">Xem chi tiết</a>
+                                    <a href="${pageContext.request.contextPath}${'/edit-job/'}${rec.id}"  class="btn btn-warning py-2 ml-2">Cập nhật</a>
+                                    <a class="btn btn-danger py-2 ml-2" href="" data-toggle="modal" data-target="${'#exampleModal'}${rec.id}">Xóa</a>
 
                                 </div>
                             </div>
                         </div><!-- end -->
                         <!-- Modal -->
-                        <div class="modal fade" th:id="${'exampleModal'} + ${recruitment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="${'exampleModal'}${rec.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -185,9 +185,9 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Bài đăng : <span th:text="${recruitment.title}"></span>
-                                        <form action="/recruitment/delete" method="post">
-                                            <input type="hidden" class="form-control" id="id" name="id" th:value="${recruitment.id}">
+                                        Bài đăng : <span>${rec.tittle}</span>
+                                        <form action="delrec" method="post">
+                                            <input type="hidden" class="form-control" id="id" name="id" value="${rec.id}">
                                             <div class="modal-footer mt-1">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                                 <button type="submit" class="btn btn-danger">Xóa</button>
@@ -199,20 +199,20 @@
                             </div>
                         </div>
                         <!-- Modal -->
-                    </th:block>
+                    </c:forEach>
                 </div>
                 <div class="row mt-5">
                     <div class="col text-center">
                         <div class="block-27">
                             <ul>
-                                <li th:if="${numberPage>0}"><a th:href="@{/user/list-post(page = ${list.number - 1})}">&lt;</a></li>
+                                <li th:if="${numberPage>0}"><a href="@{/user/list-post(page = ${list.number - 1})}">&lt;</a></li>
                                 <th:block th:each="recruitment,state  : ${recruitmentList}">
 <!--                                    <th:block th:if="${numberPage == 0}">-->
 <!--                                        <li th:class="${numberPage == 0 ? 'active' : null }"><a th:href="@{/user/list-post(page = ${state.index})}" th:text="${state.index + 1}"></a></li>-->
 <!--                                    </th:block>-->
-                                        <li th:class="${numberPage == state.index  ? 'active' : null }"><a th:href="@{/user/list-post(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
+                                        <li th:class="${numberPage == state.index  ? 'active' : null }"><a href="@{/user/list-post(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
                                 </th:block>
-                                <li th:if="${numberPage<list.totalPages - 1}"><a th:href="@{/user/list-post(page = ${list.number + 1})}">&gt;</a></li>
+                                <li th:if="${numberPage<list.totalPages - 1}"><a href="@{/user/list-post(page = ${list.number + 1})}">&gt;</a></li>
                             </ul>
                         </div>
                     </div>
@@ -221,6 +221,7 @@
 
         </div>
     </div>
+    </c:if>
 </section>
 
 

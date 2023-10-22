@@ -57,5 +57,7 @@ public class Save_job {
 		this.recruitment = recruitment;
 	}
     
-    
+	public Save_job() {
+		
+	}
 }

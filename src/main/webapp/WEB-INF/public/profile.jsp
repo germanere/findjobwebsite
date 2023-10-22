@@ -51,46 +51,42 @@
 <body>
 <nav class="header_menu" class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container-fluid px-md-4	">
-        <a class="navbar-brand" href="/">Work CV</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}">Work CV</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="oi oi-menu"></span> Menu
         </button>
     
-        <div class="collapse navbar-collapse" id="ftco-nav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-            <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-            <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
-    <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
-    <!-- 
-            <li th:if="${session.user}" class="nav-item"><a th:href="@{'/user/profile/'+${session.user.id}}" th:text="${session.user.fullName}" class="nav-link" ></a> -->
-    
-              <ul class="dropdown">
-                <li><a href="/">Hồ Sơ</a></li>
-    <!--            <li><a href="service-single.html">Đổi mật khẩu</a></li>-->
-                <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
-                <li ><a href="/user/list-post" >Danh sách bài đăng</a></li>
-                <li ><a href="/user/get-list-apply" >Công việc đã ứng tuyển</a></li>
-                <li ><a href="/user/get-list-company" >Công ty đã theo dõi</a></li>
-    <!--            <li th:if="${session.user.role.id == 2}"><a href="/auth/logout" >Ứng cử viên tiềm năng</a></li>-->
-                <li><a href="/auth/logout" >Đăng xuất</a></li>
-    
-              </ul>
-            </li>
-    
-              <li></li>
-    
-              <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-            <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
-    
-          </ul>
-        </div>
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
+
+                <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored">
+              	<c:if test="${empty logedInEmail}">
+              		<a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a>
+              	</c:if>
+				<c:if test="${not empty logedInEmail}">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, ${logedInEmail} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-save-job">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
+				  </ul>
+				</c:if>
+              </li>
+            </ul>
+          </div>
       </div>
 </nav>
 
 
 
-<div class="hero-wrap hero-wrap-2" style="background-image: url('user${pageContext.request.contextPath}/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+<div class="hero-wrap hero-wrap-2" style="background-image: url('${pageContext.request.contextPath}/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -98,11 +94,11 @@
                 <h1 class="mb-3 bread">Hồ sơ </h1>
                 <div class="form-group">
                     <label class="btn btn-primary btn-md btn-file">
-                        Chọn ảnh<input type="file" name="file" id="fileUpload" hidden>
+                        Chọn ảnh<input type="file" name="image" id="fileUpload" hidden>
                     </label>
                 </div>
                 <div style="margin-left: 0px" id="divImage" >
-                    <img id="avatar" height="100" width="100" style="border-radius: 50px" th:src="${userInformation.image != null ? userInformation.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
+                    <img id="avatar" height	="100" width="100" style="border-radius: 50px" src="${user.image != null ? user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
                 </div>
             </div>
         </div>
@@ -113,12 +109,10 @@
     <p style="font-size: 20px;font-weight: bold;color: #aaa;margin-top: 10px">Xác thực email đăng nhập</p>
     <div style="width: 600px;height: 400px;border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;padding: 15px">
-        <p style="line-height: 35px;font-size: 16px">Xin chào, <span th:text="${userInformation.fullName}" ></span> và làm theo hướng dẫn trong email.
+        <p style="line-height: 35px;font-size: 16px">Xin chào, <span>${user.fullname}"</span> và làm theo hướng dẫn trong email.
             Trường hợp không nhận được email, bạn vui lòng bấm nút Nhận email xác thực dưới đây.</p>
         <div class="row form-group">
             <form action="/user/confirm-account" method="post" class="col-md-12">
-                <input type="hidden" th:value="${userInformation.email}" name="email" class="btn px-4 btn-primary text-white">
-                <input type="submit" value="Nhận email xác thực" class="btn px-4 btn-primary text-white">
             </form>
         </div>
         <p>Mọi thắc mắc vui lòng liên hệ bộ phận CSKH của WorkCV:<br></p>
@@ -127,7 +121,7 @@
     </div>
     <div th:if="${comfirm_await}" style="width: 600px;height: 400px;border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;padding: 15px">
-        <p style="line-height: 35px;font-size: 16px">Xin chào, <span th:text="${userInformation.fullName}" ></span> .Bạn đã gửi yêu cầu xác thực thành công,
+        <p style="line-height: 35px;font-size: 16px">Xin chào, <span> ${user.fullname}" ></span> .Bạn đã gửi yêu cầu xác thực thành công,
             vui lòng kiểm tra mail để xác thực.Cảm ơn bạn!!!
         </p>
         <p>Mọi thắc mắc vui lòng liên hệ bộ phận CSKH của WorkCV:<br></p>
@@ -135,22 +129,24 @@
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
 </div>
-<section th:if="${userInformation.status == 1 && userInformation.role.id == 1}" class="site-section" style="margin-top: 10px">
+<section class="site-section" style="margin-top: 10px">
+	<c:if test="${user.status == 1 && user.role.id == 1}">
     <div class="container">
-        <form enctype="multipart/form-data">
+        <form method="post" action="uploadfile" enctype="multipart/form-data">
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 ">
                     <div class="d-flex align-items-center">
                         <div class="form-group" style="margin-top: 15px">
                             <label class="btn btn-primary btn-md btn-file">
+                              <input type="hidden" name="idcv" value="${user.CVlists.id}">
                                 Chọn cv (pdf)<input type="file" name="file" id="fileUpload1" required hidden>
                             </label>
+                            	 <c:out value="${user.CVlists.id}" />
                         </div>
                     </div>
-                    <p id="cvName" th:if="${Cv != null}" th:text="${Cv != null ? Cv.fileName :'Chưa cập nhập'}"></p>
-                    <p id="cvName" th:if="${Cv == null}"></p>
-                    <a id="nameCv" th:if="${Cv !=null}" th:href="${'http://localhost:8080/resources/uploads/'} +${Cv.fileName}" >Xem cv</a>
-                    <a id="nameCv"  th:href="${'http://localhost:8080/resources/uploads/'}" ></a>
+                    <p id="cvName"> <c:if test="${cv != null}"><p>${cv.id != null ? cv.filename :'Chưa cập nhập'}</p></c:if>
+                    <a id="nameCv" href="${'${pageContext.request.contextPath}/uploads/'}${cv.fileName}">
+                    <c:if test="${cv != null}" >Xem cv</c:if></a>
                     <a style="color: red;margin-left: 20px" th:if="${Cv !=null}" data-toggle="modal" data-target="#exampleModal" >Xóa cv</a>
                     <a style="color: red;margin-left: 20px" th:if="${Cv ==null}" id="xoa" data-toggle="modal" data-target="#exampleModal" ></a>
                 </div>
@@ -165,7 +161,7 @@
             </div>
         </form>
 
-        <form action="/user/update-profile" method="post" >
+        <form action="updateuser" method="post" >
             <div class="row align-items-center mb-5">
                 <div class="col-lg-8 mb-4 mb-lg-0">
                     <div class="d-flex align-items-center">
@@ -185,36 +181,35 @@
             </div>
             <div class="row mb-5">
                 <div class="col-lg-12">
-                    <div class="p-4 p-md-5 border rounded" method="post">
+                    <div class="p-4 p-md-5 border rounded">
+                    	<input type="hidden" name="idUser" value="${user.id}">
                         <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" th:value="${userInformation.email != null ? userInformation.email : null}" required placeholder="you@yourdomain.com">
+                            <input type="email" class="form-control" id="email" name="email" value="${user.email != null ? user.email : null}" required placeholder="you@yourdomain.com">
                         </div>
                         <div class="form-group">
                             <label for="job-title">Full name</label>
-                            <input type="text" class="form-control" name="fullName" th:value="${userInformation.fullName != null ? userInformation.fullName : null}" required id="job-title" placeholder="Full name">
+                            <input type="text" class="form-control" name="fullname" value="${user.fullname != null ? user.fullname : null}" required id="job-title" placeholder="Full name">
                         </div>
                         <div class="form-group">
                             <label for="job-location">Địa chỉ</label>
-                            <input type="text" name="address" th:value="${userInformation.address != null ? userInformation.address : null}" class="form-control" id="job-location" required placeholder="e.g. New York">
+                            <input type="text" name="address"  class="form-control" id="job-location" value="${user.address != null ? user.address : null}" required placeholder="e.g. New York">
                         </div>
                         <div class="form-group">
                             <label for="job-location">Số điện thoại</label>
-                            <input type="text" name="phoneNumber" th:value="${userInformation.phoneNumber != null ? userInformation.phoneNumber : null}" class="form-control" id="job-location" required placeholder="+ 84">
+                            <input type="text" name="phoneNumber"  class="form-control" id="job-location" value="${user.phone != null ? user.phone : null}" required placeholder="+ 84">
                         </div>
                         <div class="form-group">
                             <label for="job-location">Mô tả bản thân</label>
-                            <textarea  name="description" th:text="${userInformation.description != null ? userInformation.description : null}" class="form-control" id="editor" placeholder="Mô tả"></textarea>
+                            <textarea  name="description" class="form-control" id="editor" placeholder="Mô tả">${user.descript != null ? user.descript : null}</textarea>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
         </form>
     </div>
+   </c:if>
 </section>
 <!-- Modal -->
 <div class="modal fade"  id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -226,9 +221,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                Cv : <span id="cvXoa" ></span>
-                <span th:if="${Cv != null}" th:text="${Cv.fileName}"></span>
+            <div class="modal-body"> CV : <span id="cvXoa" ></span>
+                <span>
+                 <c:if test="${cv != null}">${cv.filename}
+                 </c:if>
+                 </span>
                 <form action="/user/deleteCv" method="post">
                     <div class="modal-footer mt-1">
                         <input type="hidden"  name="idCv">
@@ -237,39 +234,39 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
-<section th:if="${userInformation.status == 1 && userInformation.role.id == 2}" class="site-section" style="margin-top: 10px">
+<section class="site-section" style="margin-top: 10px">
+	<c:if test="${user.status == 1 && user.role.id == 2}">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 mb-5">
                 <h2 class="mb-4">Thông tin cá nhân</h2>
-                <form action="/user/update-profile" method="post" >
-
+                <form action="updateuser" method="post" >
+				<input type="hidden" name="idUser" value="${user.id}">
                     <div class="row mb-5">
                         <div class="col-lg-12">
-                            <div class="p-4 p-md-5 border rounded" method="post">
+                            <div class="p-4 p-md-5 border rounded">
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" th:value="${userInformation.email}" required placeholder="you@yourdomain.com">
+                                    <input type="email" class="form-control" id="email" name="email"  required placeholder="you@yourdomain.com">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-title">Họ và tên</label>
-                                    <input type="text" class="form-control" name="fullName" th:value="${userInformation.fullName}" id="job-title" required placeholder="Full name">
+                                    <input type="text" class="form-control" name="fullName" id="job-title" required placeholder="Full name">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Địa chỉ</label>
-                                    <input type="text" name="address" th:value="${userInformation.address != null ? userInformation.address : null}" required class="form-control" id="job-location" placeholder="e.g. New York">
+                                    <input type="text" name="address" required class="form-control" id="job-location" placeholder="e.g. New York">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Số điện thoại</label>
-                                    <input type="text" name="phoneNumber" th:value="${userInformation.phoneNumber != null ? userInformation.phoneNumber : null}" required class="form-control" id="job-location" placeholder="+ 84">
+                                    <input type="text" name="phoneNumber" required class="form-control" id="job-location" placeholder="+ 84">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Mô tả bản thân</label>
-                                    <textarea  name="description" th:text="${userInformation.description != null ? userInformation.description : null}" class="form-control" id="editor" placeholder="Mô tả"></textarea>
+                                    <textarea  name="description" class="form-control" id="editor" placeholder="Mô tả"></textarea>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-12">
@@ -291,42 +288,41 @@
                         Chọn logo<input type="file" name="file" id="fileUpload2" required hidden>
                     </label>
                     <div id="divLogo">
-                        <img id="avatar1" height="100" width="100" style="border-radius: 50px" th:src="${companyInformation.logo != null ? companyInformation.logo : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
+                        <img id="avatar1" height="100" width="100" style="border-radius: 50px" src="${company.logo != null ? company.logo : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
                     </div>
                 </div>
-                <form action="/user/update-company" method="post" enctype="multipart/form-data" >
-
+                <form action="update-company" method="post" >
+					<input type="hidden" name="idcompa" value="${company.id}">
                     <div class="row mb-5">
                         <div class="col-lg-12">
-                            <div class="p-4 p-md-5 border rounded" method="post">
+                            <div class="p-4 p-md-5 border rounded" >
                                 <div class="form-group">
                                     <label for="email">Email</label>
 
-                                    <input type="text" class="form-control" required id="email1" name="email" th:value="${companyInformation.email != null ? companyInformation.email : null }" placeholder="you@yourdomain.com">
+                                    <input type="text" class="form-control" required id="email1" name="email" value="${company.email != null ? company.email : null }" placeholder="you@yourdomain.com">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-title">Tên công ty</label>
-                                    <input type="text" class="form-control" name="nameCompany" th:value="${companyInformation.nameCompany != null ? companyInformation.nameCompany : null }" id="job-title"  placeholder="Full name" required>
-                                    <input type="hidden" class="form-control" name="user_id" th:value="${companyInformation.user.id != null ? companyInformation.user.id : null}" id="job-title" placeholder="Full name">
-                                    <input type="hidden" class="form-control" name="id" th:value="${companyInformation.id !=null ? companyInformation.id : null}" id="job-title" placeholder="Full name">
+                                    <input type="text" class="form-control" name="name_company" value="${company.name_company != null ? company.name_company : null }" id="job-title"  placeholder="Full name" required>
 
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Địa chỉ</label>
-                                    <input type="text" name="address" th:value="${companyInformation.address != null ? companyInformation.address : null}" required class="form-control" id="job-location" placeholder="e.g. New York">
+                                    <input type="text" name="address" value="${company.address != null ? company.address : null}" required class="form-control" id="job-location" placeholder="e.g. New York">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Số điện thoại công ty</label>
-                                    <input type="text" name="phoneNumber" th:value="${companyInformation.phoneNumber != null ? companyInformation.phoneNumber : null}" required class="form-control" id="job-location" placeholder="+ 84">
+                                    <input type="text" name="phoneNumber" value="${company.phone != null ? company.phone : null}" required class="form-control" id="job-location" placeholder="+ 84">
                                 </div>
                                 <div class="form-group">
                                     <label for="job-location">Mô tả công ty</label>
-                                    <textarea  name="description" th:text="${companyInformation.description != null ? companyInformation.description : null}"  class="form-control" id="editorN" placeholder="Mô tả"></textarea>
+                                    <textarea  name="description" class="form-control" id="editorN" placeholder="Mô tả">${company.descript != null ? company.descript : null}</textarea>
                                 </div>
 
-
-                                <div style="margin-left: 0px" id="divImag1" th:if="${companyInformation.logo != null}">
-                                    <img id="avatar" height="100" width="100" style="border-radius: 50px;margin-bottom: 15px" th:src="${companyInformation.logo}">
+                                <div style="margin-left: 0px" id="divImag1">
+                                <c:if test="${company.logo != null}">
+                                    <img id="avatar" height="100" width="100" style="border-radius: 50px;margin-bottom: 15px" src="${company.logo}">
+                                </c:if>
                                 </div>
                                 <div class="row form-group" >
                                     <div class="col-md-12">
@@ -340,7 +336,9 @@
             </div>
         </div>
     </div>
+    </c:if>
 </section>
+
 <script>
     ClassicEditor.create(document.querySelector('#editor')).then(eidt => {
         console.log("da" + eidt);
@@ -373,7 +371,7 @@
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/user/upload/',
+                            url: '/upload',
                             contentType: false,
                             processData: false,
                             data: formData,
@@ -433,7 +431,7 @@
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/user/upload-company/',
+                            url: '${pageContext.request.contextPath}/uploadfile',
                             contentType: false,
                             processData: false,
                             data: formData,
@@ -491,7 +489,7 @@
                     $.ajax(
                         {
                             type: 'POST',
-                            url: '/user/uploadCv',
+                            url: '${pageContext.request.contextPath}/uploadfile',
                             contentType: false,
                             processData: false,
                             data: formData,
@@ -512,7 +510,7 @@
                                 }else{
                                     // $('#avatar').attr('src', urlImage)
                                     document.getElementById('nameCv').innerHTML = 'Xem cv';
-                                    document.getElementById('nameCv').href = "http://localhost:8080/resources/uploads/"+urlImage ; //or grab it by tagname etc
+                                    document.getElementById('nameCv').href = 'http://localhost:8080/resources/uploads/' + urlImage ; //or grab it by tagname etc
                                     document.getElementById('xoa').innerHTML = 'Xóa cv';
                                     document.getElementById("cvName").innerHTML = urlImage;
                                     document.getElementById("cvXoa").innerHTML = urlImage;
@@ -529,7 +527,7 @@
 
                             },
                             error: function (err) {
-                                alert(err);
+                                alert(JSON.stringify(err));
                             }
                         }
                     )

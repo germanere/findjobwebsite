@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AddAccount {
+    public static void main(String[] args) {
+        ArrayList<String> customerCCCDList = new ArrayList<>();
+        ArrayList<Integer> accountNumberList = new ArrayList<>();
+        ArrayList<Double> accountBalanceList = new ArrayList<>();
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Nhap CCCD cua khach hang: ");
+        String customerCCCD = input.nextLine();
+
+        // kiểm tra CCCD của khách hàng có tồn tại trong danh sách
+        while (!customerCCCDList.contains(customerCCCD)) {
+            System.out.println("CCCD cua khach hang khong dung hoac khong ton tai trong he thong ngan hang!");
+            System.out.print("Nhap CCCD cua khach hang: ");
+            customerCCCD = input.nextLine();
+        }
+
+        // nhập mã số khách hàng gồm 6 chữ số
+        System.out.print("Nhap ma so khach hang: ");
+        int accountNumber = input.nextInt();
+
+        // kiểm tra mã số khách hàng nhập vào có bị trùng
+        while (accountNumberList.contains(accountNumber)) {
+            System.out.println("Ma so tai khoan da ton tai!");
+            System.out.print("Nhap lai ma so khach hang: ");
+            accountNumber = input.nextInt();
+        }
+
+        // nhập số dư tài khoản khách hàng và kiểm tra
+        System.out.print("Nhap so du tai khoan: ");
+        double accountBalance = input.nextDouble();
+
+        while (accountBalance < 50000) {
+            System.out.println("So du tai khoan khong hop le, vui long nhap so du tai khoan lai (> 50000).");
+            System.out.print("Nhap so du tai khoan: ");
+            accountBalance = input.nextDouble();
+        }
+
+        // thêm tài khoản khách hàng vào danh sách
+        accountNumberList.add(accountNumber);
+        accountBalanceList.add(accountBalance);
+
+        System.out.println("Tai khoan cua khach hang da duoc them thanh cong!");
+    }
+}

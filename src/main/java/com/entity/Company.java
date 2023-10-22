@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -36,13 +35,16 @@ public class Company {
     @Column(name="logo")
     private String logo;
     
+    @Column(name = "name_company")
+    private String name_company;
+    
     @Column(name="phone")
     private String phone;
     
     @Column(name="status")
     private int status;
     
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="user_id")
     private User users;
     
@@ -134,20 +136,32 @@ public class Company {
 		this.users = users;
 	}
 
-	public Company(int id, String address, String descript, String email, String logo, String phone, int status,
-			User users, Recruitment recruitment, Set<Folow_company> folow_companies) {
+	public String getName_company() {
+		return name_company;
+	}
+
+	public void setName_company(String name_company) {
+		this.name_company = name_company;
+	}
+
+	
+    public Company(int id, String address, String descript, String email, String logo, String name_company,
+			String phone, int status, User users, Recruitment recruitment, Set<Folow_company> folow_companies) {
 		super();
 		this.id = id;
 		this.address = address;
 		this.descript = descript;
 		this.email = email;
 		this.logo = logo;
+		this.name_company = name_company;
 		this.phone = phone;
 		this.status = status;
 		this.users = users;
 		this.recruitment = recruitment;
 		this.folow_companies = folow_companies;
 	}
-    
-    
+
+	public Company() {
+    	super();
+    }
 }

@@ -57,30 +57,25 @@
     
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-            <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-            <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
     <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
     <!-- 
             <li th:if="${session.user}" class="nav-item"><a th:href="@{'/user/profile/'+${session.user.id}}" th:text="${session.user.fullName}" class="nav-link" ></a> -->
     
               <ul class="dropdown">
-                <li><a href="/">Hồ Sơ</a></li>
-    <!--            <li><a href="service-single.html">Đổi mật khẩu</a></li>-->
-                <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
-                <li ><a href="/user/list-post" >Danh sách bài đăng</a></li>
-                <li ><a href="/user/get-list-apply" >Công việc đã ứng tuyển</a></li>
-                <li ><a href="/user/get-list-company" >Công ty đã theo dõi</a></li>
-    <!--            <li th:if="${session.user.role.id == 2}"><a href="/auth/logout" >Ứng cử viên tiềm năng</a></li>-->
-                <li><a href="/auth/logout" >Đăng xuất</a></li>
-    
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-job">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
               </ul>
             </li>
-    
-              <li></li>
-    
-              <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-            <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+  
+     		<li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+            <li class="nav-item cta cta-colored"><a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a></li>
     
           </ul>
         </div>
@@ -164,7 +159,7 @@
                 <div class="tab-content p-4" id="v-pills-tabContent">
 
                   <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                    <form action="/recruitment/search" method="post" class="search-job">
+                    <form action="result-searchs" method="post" class="search-job">
                       <div class="row no-gutters">
 
                         <div class="col-md-10 mr-md-2">
@@ -187,14 +182,14 @@
                   </div>
 
                   <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                    <form action="/user/search" method="post" class="search-job">
+                    <form action="result-search-users" method="post" class="search-job">
                       <div class="row no-gutters">
 
                         <div class="col-md-10 mr-md-2">
                           <div class="form-group">
                             <div class="form-field">
                               <div class="icon"><span class="icon-map-marker"></span></div>
-                              <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm ứng cử viên">
+                              <input type="text" name="keySearchc" class="form-control" placeholder="Tìm kiếm ứng cử viên">
                             </div>
                           </div>
                         </div>
@@ -209,14 +204,14 @@
                     </form>
                   </div>
                   <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                    <form action="/recruitment/searchaddress" method="post" class="search-job">
+                    <form action="result-search-addresses" method="post" class="search-job">
                       <div class="row no-gutters">
 
                         <div class="col-md-10 mr-md-2">
                           <div class="form-group">
                             <div class="form-field">
                               <div class="icon"><span class="icon-map-marker"></span></div>
-                              <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm theo địa điểm">
+                              <input type="text" name="keySearchadr" class="form-control" placeholder="Tìm kiếm theo địa điểm">
                             </div>
                           </div>
                         </div>
@@ -242,39 +237,39 @@
 
 <section class="ftco-section bg-light">
   <div class="container">
-    <h4 style="margin-top: -20px">Kết quả tìm kiếm cho : <span th:text="${keySearch}"></span></h4>
+    <h4 style="margin-top: -20px">Kết quả tìm kiếm cho : <span>${keySearchc}></span></h4>
     <div class="row">
       <div class="col-lg-12 pr-lg-5">
         <div class="row">
-          <th:block th:each="applyPost : ${list.content}">
+         <c:forEach var="compa" items="${company}">
             <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
               <div class="team d-md-flex p-4 bg-white">
-                <IMG style="margin-top: 10px" class="img" th:src="${applyPost.image != null ? applyPost.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
+                <img style="margin-top: 10px" class="img" src="${compa.logo != null ? compa.logo : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
                 <div class="text pl-md-4">
-                  <H5 class="location mb-0" th:text="${applyPost.fullName}"></H5>
-                  <p style="display: block;color: black" th:text="${applyPost.address}"></p>
-                  <span class="position" style="display: block;color: black" th:text="${applyPost.email}"></span>
-                  <p class="mb-4" style="width: 700px" th:utext="${applyPost.description}">.</p>
-                  <div th:if="${applyPost.cv != null}" style="margin-left: 1px" class="row">
-                    <p><a th:href="${'/user/getCv/'}+${applyPost.id}"  class="btn btn-primary">Xem cv</a></p>
-                  </div>
+                  <H5 class="location mb-0">${compa.name_company}</H5>
+                  <p style="display: block;color: black">${compa.address}</p>
+                  <span class="position" style="display: block;color: black">${compa.email}</span>
+                  <p class="mb-4" style="width: 700px">${compa.descript}</p>
                 </div>
               </div>
             </div>
-          </th:block>
-          <div  style="text-align: center" th:if="${list.totalPages == 0}">
-            <p style="color: red">Không có kết quả nào</p>
-          </div>
+          </c:forEach>
+          
+           <div style="text-align: center">
+              <c:if test="${list.totalPages == 0}">
+                  <p style="color: red">Không có kết quả nào</p>
+              </c:if>
+           </div>
         </div>
         <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li th:if="${numberPage>0}"><a th:href="@{'/user/search/' +${keySearch}(page = ${list.number - 1})}">&lt;</a></li>
+                <li th:if="${numberPage>0}"><a href="@{'/user/search/' +${keySearch}(page = ${list.number - 1})}">&lt;</a></li>
                 <th:block th:each="recruitment,state  : ${recruitmentList}">
-                  <li th:class="${numberPage == state.index  ? 'active' : null }"><a th:href="@{'/user/search/' +${keySearch}(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
+                  <li th:class="${numberPage == state.index  ? 'active' : null }"><a href="@{'/user/search/' +${keySearch}(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
                 </th:block>
-                <li th:if="${numberPage<list.totalPages - 1}"><a th:href="@{'/user/search/' +${keySearch}(page = ${list.number + 1})}">&gt;</a></li>
+                <li th:if="${numberPage<list.totalPages - 1}"><a href="@{'/user/search/' +${keySearch}(page = ${list.number + 1})}">&gt;</a></li>
               </ul>
             </div>
           </div>
@@ -486,7 +481,6 @@
 
   }
 </script>
-
 
 
 <footer th:replace="public/fragments :: footer" class="ftco-footer ftco-bg-dark ftco-section">

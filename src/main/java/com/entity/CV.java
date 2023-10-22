@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -21,15 +21,15 @@ public class CV {
     @Column(name = "filename")
     private String filename;
     
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private CV cvs;
+    @OneToOne
+    @JoinColumn(name="user_id",referencedColumnName = "id")
+    private User users;
 
-	public CV(int id, String filename, CV cvs) {
+	public CV(int id, String filename, User users) {
 		super();
 		this.id = id;
 		this.filename = filename;
-		this.cvs = cvs;
+		this.users = users;
 	}
 
 	public int getId() {
@@ -48,18 +48,20 @@ public class CV {
 		this.filename = filename;
 	}
 
-	public CV getCvs() {
-		return cvs;
+	public User getUsers() {
+		return users;
 	}
 
-	public void setCvs(CV cvs) {
-		this.cvs = cvs;
+	public void setUsers(User users) {
+		this.users = users;
 	}
 
 	@Override
 	public String toString() {
-		return "CV [id=" + id + ", filename=" + filename + ", cvs=" + cvs + "]";
+		return "CV [id=" + id + ", filename=" + filename + ", cvs=" + users + "]";
 	}
     
-   
+   public CV() {
+	   
+   }
 }

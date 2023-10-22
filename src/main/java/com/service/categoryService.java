@@ -22,4 +22,9 @@ public class categoryService {
 	public List<Category> getCategories(){
 		return categoryrepository.findAll();
 	}
+	
+	@Transactional
+	public Category findcatebyid(int id) {
+		return categoryrepository.findById(id);
+	}
 }

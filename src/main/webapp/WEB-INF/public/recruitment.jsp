@@ -56,35 +56,31 @@
           <span class="oi oi-menu"></span> Menu
         </button>
     
-        <div class="collapse navbar-collapse" id="ftco-nav">
-          <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/PRJ321_ASM02" class="nav-link">Trang chủ</a></li>
-              <li class="'nav-item"><a href="/PRJ321_ASM02/" class="nav-link">Công việc</a></li>
-              <li class="nav-item"><a href="/PRJ321_ASM02/list-users" class="nav-link">Ứng cử viên</a></li>
-    <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
-    <!-- 
-            <li th:if="${session.user}" class="nav-item"><a th:href="@{'/user/profile/'+${session.user.id}}" th:text="${session.user.fullName}" class="nav-link" ></a> -->
-    
-              <ul class="dropdown">
-                <li><a href="/">Hồ Sơ</a></li>
-    <!--            <li><a href="service-single.html">Đổi mật khẩu</a></li>-->
-                  <li ><a href="/PRJ321_ASM02/list-apply-jobs" >Công việc đã lưu</a></li>
-                  <li ><a href="/PRJ321_ASM02/post-list">Danh sách bài đăng</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-apply-job" >Công việc đã ứng tuyển</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-follow-company" >Công ty đã theo dõi</a></li>
-    <!--            <li th:if="${session.user.role.id == 2}"><a href="/auth/logout" >Ứng cử viên tiềm năng</a></li>-->
-                  <li><a href="/PRJ321_ASM02/login" >Đăng xuất</a></li>
-    
-              </ul>
-            </li>
-    
-              <li></li>
-    
-                <li class="nav-item cta mr-md-1"><a href="/PRJ321_ASM02/recruitment/" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/PRJ321_ASM02/login" class="nav-link">Đăng nhập</a></li>
-    
-          </ul>
-        </div>
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
+
+                <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored">
+              	<c:if test="${empty logedInEmail}">
+              		<a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a>
+              	</c:if>
+				<c:if test="${not empty logedInEmail}">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, ${logedInEmail} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-save-job">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
+				  </ul>
+				</c:if>
+              </li>
+            </ul>
+          </div>
       </div>
 </nav>
 <!-- END nav -->
@@ -95,7 +91,7 @@
     <div class="row d-md-flex no-gutters slider-text align-items-center justify-content-center">
       <div class="col-md-10 d-flex align-items-center ">
         <div class="text text-center pt-5 mt-md-5">
-          <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Trang chủ <i class="ion-ios-arrow-forward"></i></a></span>Công việc <span></span></p>
+          <p class="breadcrumbs mb-0"><span class="mr-3"><a href="${pageContext.request.contextPath}">Trang chủ <i class="ion-ios-arrow-forward"></i></a></span>Công việc <span></span></p>
           <h1 class="mb-3 bread">Danh sách công việc</h1>
           <div class="ftco-search my-md-5">
             <div class="row">
@@ -113,7 +109,7 @@
                 <div class="tab-content p-4" id="v-pills-tabContent">
 
                   <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                    <form action="/recruitment/search" method="post" class="search-job">
+                    <form action="result-searchs" method="post" class="search-job">
                       <div class="row no-gutters">
 
                         <div class="col-md-10 mr-md-2">
@@ -136,14 +132,14 @@
                   </div>
 
                   <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                    <form action="/user/search" method="post" class="search-job">
+                    <form action="result-search-users" method="post" class="search-job">
                       <div class="row no-gutters">
 
                         <div class="col-md-10 mr-md-2">
                           <div class="form-group">
                             <div class="form-field">
                               <div class="icon"><span class="icon-map-marker"></span></div>
-                              <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm ứng cử viên">
+                              <input type="text" name="keySearchc" class="form-control" placeholder="Tìm kiếm ứng cử viên">
                             </div>
                           </div>
                         </div>
@@ -158,14 +154,14 @@
                     </form>
                   </div>
                   <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                    <form action="/recruitment/searchaddress" method="post" class="search-job">
+                    <form action="result-search-addresses" method="post" class="search-job">
                       <div class="row no-gutters">
 
                         <div class="col-md-10 mr-md-2">
                           <div class="form-group">
                             <div class="form-field">
                               <div class="icon"><span class="icon-map-marker"></span></div>
-                              <input type="text" name="keySearch" class="form-control" placeholder="Tìm kiếm theo địa điểm">
+                              <input type="text" name="keySearchadr" class="form-control" placeholder="Tìm kiếm theo địa điểm">
                             </div>
                           </div>
                         </div>
@@ -194,74 +190,74 @@
     <div class="row">
       <div class="col-lg-9 pr-lg-5">
         <div class="row">
-          <th:block th:each="recruitment : ${list.content}">
+        <c:forEach var="rec" items="${recruitment}">
             <div class="col-md-12 ">
               <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                 <div class="one-third mb-4 mb-md-0">
                   <div class="job-post-item-header align-items-center">
-                    <span class="subadge" th:text="${recruitment.type}"></span>
-                    <h2 class="mr-3 text-black" ><a th:text="${recruitment.title}" th:href="${'/recruitment/detail/'} +${recruitment.id}"></a></h2>
+                    <span class="subadge" >FULLTIME</span>
+                    <h2 class="mr-3 text-black" ><a href="${'/recruitment/detail/'}${rec.id}">${rec.tittle}</a></h2>
                   </div>
                   <div class="job-post-item-body d-block d-md-flex">
-                    <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${recruitment.Company.nameCompany}" ></a></div>
-                    <div><span class="icon-my_location"></span> <span th:text="${recruitment.address}"></span></div>
+                    <div class="mr-3"><span class="icon-layers"></span> <a href="#" >${rec.company.name_company}</a></div>
+                    <div><span class="icon-my_location"></span> <span>${rec.address}</span></div>
                   </div>
                 </div>
-                <input type="hidden" th:id="${'idRe'}+${recruitment.id}" th:value="${recruitment.id}">
+                <input type="hidden" id="${'idRe'}${rec.id}" value="${rec.id}">
                 <div th:if="${session.user}" class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                   <div th:if="${session.user.role.id == 1}">
-                    <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                    <a onclick="'save(' +${rec.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                       <span class="icon-heart"></span>
                     </a>
                   </div>
-                  <a th:if="${session.user.role.id == 1}"  data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                  <c:if test="${session.user.role.id} == 1">
+                  <a data-bs-toggle="modal" data-bs-target="${'#exampleModal'}${rec.id}" class="btn btn-primary py-2">Apply Job</a>
+                  </c:if>
                 </div>
                 <div th:unless="${session.user}" class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                   <div>
-                    <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                    <a onclick="'save(' +${rec.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                       <span class="icon-heart"></span>
                     </a>
                   </div>
-                  <a data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                  <a data-bs-toggle="modal" data-bs-target="${'#exampleModal'}${rec.id}" class="btn btn-primary py-2">Apply Job</a>
                 </div>
               </div>
             </div><!-- end -->
             <!-- Modal -->
-            <div class="modal fade" th:id="${'exampleModal'}+${recruitment.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="${'exampleModal'}${rec.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span th:text="${recruitment.title}"></span></h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Ứng tuyển: <span>${rec.tittle}</span></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form method="post" action="/user/apply-job">
+                  <form method="post" action="list-apply-jobs">
                     <div class="modal-body">
                       <div class="row">
                         <div class="col-12">
-                          <select th:id="${'choose'}+${recruitment.id}" th:onchange="'choosed(' +${recruitment.id}+ ')'" class="form-control" aria-label="Default select example">
+                          <select id="${'choose'}${rec.id}" onchange="'choosed(' +${rec.id}+ ')'" class="form-control" aria-label="Default select example">
                             <option selected>Chọn phương thức nộp</option>
                             <option value="1">Dùng cv đã cập nhật</option>
                             <option value="2">Nộp cv mới</option>
                           </select>
                         </div>
-                        <div th:id="${'loai1'}+${recruitment.id}" style="display:none" class="col-12">
+                        <div id="${'loai1'}${rec.id}" style="display:none" class="col-12">
                           <label for="fileUpload"
                                  class="col-form-label">Giới thiệu:</label>
-                          <textarea rows="10" cols="3" class="form-control"  th:id="${'text'}+${recruitment.id}" >
-
-                                                    </textarea>
+                          <textarea rows="10" cols="3" class="form-control" id="${'text'}${rec.id}" > </textarea>
                         </div>
-                        <div th:id="${'loai2'}+${recruitment.id}" style="display:none" class="col-12">
+                        <div id="${'loai2'}${rec.id}" style="display:none" class="col-12">
 
                           <label for="fileUpload"
                                  class="col-form-label">Chọn cv:</label>
                           <input type="file" class="form-control"
-                                 th:id="${'fileUpload'}+${recruitment.id}" name="file"   required>
+                                 id="${'fileUpload'}${rec.id}" name="file"   required>
                           <label for="fileUpload"
                                  class="col-form-label">Giới thiệu:</label>
-                          <textarea rows="10" cols="3" class="form-control"  th:id="${'text'}+${recruitment.id}" >
+                          <textarea rows="10" cols="3" class="form-control" id="${'text'}${rec.id}" >
 
                                                     </textarea>
                         </div>
@@ -269,29 +265,24 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" th:id="${'button1'}+${recruitment.id}" style="display: none" th:onclick="'apply1(' +${recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
-                        <button type="button" th:id="${'button2'}+${recruitment.id}" style="display: none" th:onclick="'apply(' +${recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
+                        <button type="button" id="${'button2'}${rec.id}" style="display: none" onclick="'apply(' +${rec.id}+ ')'" class="btn btn-primary">Nộp</button>
                       </div>
                     </div>
                   </form>
-
-
-
                 </div>
               </div>
             </div>
-          </th:block>
-
+			</c:forEach>
         </div>
         <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li th:if="${numberPage>0}"><a th:href="@{/recruitment/index(page = ${list.number - 1})}">&lt;</a></li>
+                <li th:if="${numberPage>0}"><a href="@{/recruitment/index(page = ${list.number - 1})}">&lt;</a></li>
                 <th:block th:each="recruitment,state  : ${recruitmentList}">
-                  <li th:class="${numberPage == state.index  ? 'active' : null }"><a th:href="@{/recruitment/index(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
+                  <li th:class="${numberPage == state.index  ? 'active' : null }"><a href="@{/recruitment/index(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
                 </th:block>
-                <li th:if="${numberPage<list.totalPages - 1}"><a th:href="@{/recruitment/index(page = ${list.number + 1})}">&gt;</a></li>
+                <li th:if="${numberPage<list.totalPages - 1}"><a href="@{/recruitment/index(page = ${list.number + 1})}">&gt;</a></li>
               </ul>
             </div>
           </div>
@@ -303,17 +294,17 @@
             <h2 class="mb-4">Công ty nổi bật</h2>
           </div>
         </div>
-        <th:block th:each="companies : ${companies}">
-          <div class="sidebar-box">
-            <div class="">
-              <a th:href="${'/user/detail-company/'}+${companies[0]}" class="company-wrap"><img th:src="${companies[2]}" class="img-fluid" alt="Colorlib Free Template"></a>
-              <div class="text p-3">
-                <h3><a th:href="${'/user/detail-company/'}+${companies[0]}" th:text="${companies[1]}"></a></h3>
-                <p><span class="number" style="color: black" th:text="${companies[3]}"></span> <span>Vị trí ứng tuyển</span></p>
-              </div>
-            </div>
-          </div>
-        </th:block>
+          <c:forEach var="compa" items="${companies}">
+				  <div class="sidebar-box">
+				    <div class="">
+				      <a href="${pageContext.request.contextPath}${'/detail-company/'}${compa.id}" class="company-wrap"><img src="${pageContext.request.contextPath}/assets/images/fpt.png" class="img-fluid" alt="Colorlib Free Template"></a>
+				      <div class="text p-3">
+				        <h3><a href="${pageContext.request.contextPath}/detail-company/{compa_id}"></a></h3>
+				        <p><span class="number" style="color: black"></span>${compa.name_company} <span> Tuyển ${compa.recruitment.quantity} Vị Trí</span></p>
+				      </div>
+				    </div>
+				  </div>
+          </c:forEach>
       </div>
     </div>
   </div>

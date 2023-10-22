@@ -50,24 +50,24 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid px-md-4	">
-      <a class="navbar-brand" href="/">Work CV</a>
+      <a class="navbar-brand" href="${pageContext.request.contextPath}">Work CV</a>
   
       <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/PRJ321_ASM02" class="nav-link">Trang chủ</a></li>
-              <li class="'nav-item"><a href="/PRJ321_ASM02/" class="nav-link">Công việc</a></li>
-              <li class="nav-item"><a href="/PRJ321_ASM02/list-users" class="nav-link">Ứng cử viên</a></li>
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
                 <ul class="dropdown">
-                  <li><a href="/PRJ321_ASM02/profile">Hồ Sơ</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-apply-jobs" >Công việc đã lưu</a></li>
-                  <li ><a href="/PRJ321_ASM02/post-list">Danh sách bài đăng</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-apply-job" >Công việc đã ứng tuyển</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-follow-company" >Công ty đã theo dõi</a></li>
-                  <li><a href="/PRJ321_ASM02/login" >Đăng xuất</a></li>
+                  <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/list-apply-jobs" >Công việc đã lưu</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/list-apply-job" >Công việc đã ứng tuyển</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/list-follow-company" >Công ty đã theo dõi</a></li>
+                  <li><a href="${pageContext.request.contextPath}/login" >Đăng xuất</a></li>
                 </ul>
                 <li></li>
-                <li class="nav-item cta mr-md-1"><a href="/PRJ321_ASM02/recruitment/" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/PRJ321_ASM02/login" class="nav-link">Đăng nhập</a></li>
+                <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment/" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored"><a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a></li>
             </ul>
       </div>
     </div>
@@ -102,22 +102,22 @@
     <div class="row">
       <div class="col-lg-12 pr-lg-5">
         <div class="row">
-          <th:block th:each="applyPost : ${list.content}">
+          <c:forEach var="appo" items="${applypost}">
             <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
               <div class="team d-md-flex p-4 bg-white">
-                <IMG style="margin-top: 10px" class="img" th:src="${applyPost.image != null ? applyPost.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
+                <IMG style="margin-top: 10px" class="img" src="${appo.users.image != null ? appo.user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
                 <div class="text pl-md-4">
-                  <H5 class="location mb-0" th:text="${applyPost.fullName}"></H5>
-                  <p style="display: block;color: black" th:text="${applyPost.address}"></p>
-                  <span class="position" style="display: block;color: black" th:text="${applyPost.email}"></span>
-                  <p class="mb-4" style="width: 700px" th:utext="${applyPost.description}">.</p>
-                  <div th:if="${applyPost.cv != null}" style="margin-left: 1px" class="row">
-                    <p><a th:href="${'/user/getCv/'}+${applyPost.id}"  class="btn btn-primary">Xem cv</a></p>
+                  <H5 class="location mb-0">${appo.users.fullname}</H5>
+                  <p style="display: block;color: black">${appo.users.address}</p>
+                  <span class="position" style="display: block;color: black">${appo.users.email}</span>
+                  <p class="mb-4" style="width: 700px">${appo.users.descript}</p>
+                  <div style="margin-left: 1px" class="row">
+	
                   </div>
                 </div>
               </div>
             </div>
-          </th:block>
+          </c:forEach>
           <div  style="text-align: center" th:if="${list.totalPages == 0}">
             <p style="color: red">Không có kết quả nào</p>
           </div>

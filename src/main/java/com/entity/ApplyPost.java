@@ -27,6 +27,9 @@ public class ApplyPost {
     @Column(name="status")
     private int status;
     
+    @Column(name = "text")
+    private String text;
+    
     @ManyToOne
     @JoinColumn(name="user_id")
     private User users;
@@ -35,14 +38,24 @@ public class ApplyPost {
     @JoinColumn(name="recruiment_id")
     private Recruitment recruitment;
 
-	public ApplyPost(int id, String created_at, String name_cv, int status, User users, Recruitment recruitment) {
+	public ApplyPost(int id, String created_at, String name_cv, int status, String text, User users,
+			Recruitment recruitment) {
 		super();
 		this.id = id;
 		this.created_at = created_at;
 		this.name_cv = name_cv;
 		this.status = status;
+		this.text = text;
 		this.users = users;
 		this.recruitment = recruitment;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	public int getId() {
@@ -93,5 +106,7 @@ public class ApplyPost {
 		this.recruitment = recruitment;
 	}
     
-    
+    public ApplyPost() {
+    	
+    }
 }

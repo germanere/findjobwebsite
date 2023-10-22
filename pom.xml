@@ -97,8 +97,7 @@
 		    <groupId>javax.xml.bind</groupId>
 		    <artifactId>jaxb-api</artifactId>
 		    <version>2.3.1</version>
-		</dependency>
-		
+		</dependency>		
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
@@ -110,7 +109,6 @@
 		    <artifactId>spring-security-core</artifactId>
 		    <version>5.1.4.RELEASE</version>
 		</dependency>
-
       <dependency>
           <groupId>org.springframework.security</groupId>
           <artifactId>spring-security-config</artifactId>
@@ -121,9 +119,34 @@
         <artifactId>spring-security-taglibs</artifactId>
         <version>5.1.4.RELEASE</version>
     </dependency>
-
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.5</version>
+		</dependency>
+	<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+		    <groupId>commons-io</groupId>
+		    <artifactId>commons-io</artifactId>
+		    <version>2.4</version>
+		</dependency>
+	
   </dependencies>
   <build>
     <finalName>asm02</finalName>
+    		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+				<configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>3.2.3</version>
+			</plugin>
+		</plugins>
   </build>
 </project>

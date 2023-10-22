@@ -53,24 +53,31 @@
     <div class="container-fluid px-md-4	">
       <a class="navbar-brand" href="/">Work CV</a>
   
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-          <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-          <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
-            <ul class="dropdown">
-              <li><a href="/">Hồ Sơ</a></li>
-              <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
-              <li ><a href="/user/list-post" >Danh sách bài đăng</a></li>
-              <li ><a href="/user/get-list-apply" >Công việc đã ứng tuyển</a></li>
-              <li ><a href="/user/get-list-company" >Công ty đã theo dõi</a></li>
-              <li><a href="/auth/logout" >Đăng xuất</a></li>
+          <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
+
+                <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored">
+              	<c:if test="${empty logedInEmail}">
+              		<a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a>
+              	</c:if>
+				<c:if test="${not empty logedInEmail}">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, ${logedInEmail} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-save-job">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
+				  </ul>
+				</c:if>
+              </li>
             </ul>
-            <li></li>
-            <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-          <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
-        </ul>
-      </div>
+          </div>
     </div>
   </nav>
 <!-- END nav -->
@@ -129,14 +136,15 @@
       <div class="col-md-7">
         <h1 class="text-white font-weight-bold">Cập nhật</h1>
         <div class="custom-breadcrumbs">
-          <a href="/user/list-post">Danh sách</a> <span class="mx-2 slash">/</span>
+          <a href="${pageContext.request.contextPath}/post-list">Danh sách</a> <span class="mx-2 slash">/</span>
           <span class="text-white"><strong>Cập nhật bài tuyển dụng</strong></span>
         </div>
       </div>
     </div>
   </div>
 </section>
-<div class="hero-wrap hero-wrap-2" style="background-image: url('user${pageContext.request.contextPath}/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5" th:if="${session.user.role.id == 1 }">
+<div class="hero-wrap hero-wrap-2" style="background-image: url('${pageContext.request.contextPath}/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5" >
+  <c:if test="${sessionScope.user.role.id == 1 }">
   <div class="overlay"></div>
   <div class="container">
     <div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -146,12 +154,13 @@
       </div>
     </div>
   </div>
+  </c:if>
 </div>
-<section class="site-section" th:if="${session.user.role.id == 2 }">
+<section class="site-section">
+ <c:if test="${sessionScope.user.role.id == 2}">
   <div class="container">
-    <form action="/recruitment/edit" method="post">
-      <input type="hidden" class="form-control" id="job-location"  name="id" th:value="${recruitment.id}">
-      <input type="hidden" class="form-control" id="job-location"  name="createdAt" th:value="${recruitment.createdAt}">
+    <form action="${pageContext.request.contextPath}/updaterec" method="post">
+      <input type="hidden" class="form-control" id="job-location"  name="idrec" value="${recruitment.id}">
       <div class="row align-items-center mb-5">
         <div class="col-lg-8 mb-4 mb-lg-0">
           <div class="d-flex align-items-center">
@@ -173,42 +182,42 @@
       </div>
       <div class="row mb-5">
         <div class="col-lg-12">
-          <div class="p-4 p-md-5 border rounded" method="post">
+          <div class="p-4 p-md-5 border rounded" >
             <h3 class="text-black mb-5 border-bottom pb-2">Chi tiết bài tuyển dụng</h3>
 
             <div class="form-group">
               <label for="email">Tiêu đề</label>
-              <input type="text" class="form-control" id="email" name="title"  required th:value="${recruitment.title}">
+              <input type="text" class="form-control" id="email" name="title"  required value="${recruitment.tittle}">
             </div>
             <div class="form-group">
               <label for="job-location">Mô tả công việc</label>
-              <textarea  name="description"   class="form-control" id="editorN" th:text="${recruitment.description}"></textarea>
+              <textarea class="form-control" id="editorN" name="description" >${recruitment.descript}</textarea>
             </div>
             <div class="form-group">
               <label for="job-title">Kinh nghiệm</label>
-              <input type="text" class="form-control" id="job-title" name="experience" th:value="${recruitment.experience}">
+              <input type="text" class="form-control" id="job-title" name="experience" value="${recruitment.experience}">
             </div>
             <div class="form-group">
               <label for="job-title">Số người cần tuyển</label>
-              <input type="number" class="form-control" id="job-title" name="quantity" th:value="${recruitment.quantity}">
+              <input type="number" class="form-control" id="job-title" name="quantity" value="${recruitment.quantity}">
             </div>
             <div class="form-group">
               <label for="job-location">Địa chỉ</label>
-              <input type="text" class="form-control" id="job-location"  name="address" th:value="${recruitment.address}">
+              <input type="text" class="form-control" id="job-location"  name="address" value="${recruitment.address}">
             </div>
             <div class="form-group">
               <label for="job-location">Hạn ứng tuyển</label>
-              <input type="date" class="form-control" id="job-location"  name="deadline" th:value="${recruitment.deadline}">
+              <input type="date" class="form-control" id="job-location"  name="deadline" value="${recruitment.deadline}">
             </div>
             <div class="form-group">
               <label for="job-location">Lương</label>
-              <input type="text" class="form-control" id="job-location"  name="salary" th:value="${recruitment.salary}">
+              <input type="text" class="form-control" id="job-location"  name="salary" value="${recruitment.salary}">
             </div>
 
             <div class="form-group">
               <label for="job-region">Loại công việc</label>
               <select class="form-control" name="type" aria-label="Default select example" required>
-                <option th:value="${recruitment.type}" selected th:text="${recruitment.type}"></option>
+                <option ></option>
                 <option value="Part time">Part time</option>
                 <option value="Full time">Full time</option>
                 <option value="Freelancer">Freelancer</option>
@@ -218,10 +227,10 @@
             <div class="form-group">
               <label for="job-region">Danh mục công việc</label>
               <select class="form-control" name="category_id" aria-label="Default select example" required>
-                <option th:value="${recruitment.category.id}" selected th:text="${recruitment.category.name}"></option>
-                <th:block th:each="cat : ${categories}">
-                  <option th:value="${cat.id}" th:text="${cat.name}"></option>
-                </th:block>
+                <option value="${recruitment.category.id}" selected >${recruitment.category.name}</option>
+                <c:forEach var="cate" items="${category}">
+                  <option value="${cate.id}">${cate.name}</option>
+                </c:forEach>
 
               </select>
 
@@ -245,6 +254,7 @@
       </div>
     </form>
   </div>
+  </c:if>
 </section>
 <script>
   ClassicEditor.create(document.querySelector('#editorN')).then(eidt => {

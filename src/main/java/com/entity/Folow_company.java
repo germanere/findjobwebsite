@@ -56,5 +56,7 @@ public class Folow_company {
 		this.company = company;
 	}
     
-    
+	public Folow_company() {
+		
+	}
 }

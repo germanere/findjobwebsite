@@ -185,5 +185,7 @@ public class Recruitment {
 		this.save_jobs = save_jobs;
 	}
     
-    
+    public Recruitment() {
+    	
+    }
 }

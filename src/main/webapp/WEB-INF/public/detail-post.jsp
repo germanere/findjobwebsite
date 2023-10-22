@@ -53,20 +53,27 @@
       
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-              <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-              <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
-                <ul class="dropdown">
-                  <li><a href="/">Hồ Sơ</a></li>
-                  <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
-                  <li ><a href="/user/list-post" >Danh sách bài đăng</a></li>
-                  <li ><a href="/user/get-list-apply" >Công việc đã ứng tuyển</a></li>
-                  <li ><a href="/user/get-list-company" >Công ty đã theo dõi</a></li>
-                  <li><a href="/auth/logout" >Đăng xuất</a></li>
-                </ul>
-                <li></li>
-                <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
+
+                <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored">
+              	<c:if test="${empty logedInEmail}">
+              		<a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a>
+              	</c:if>
+				<c:if test="${not empty logedInEmail}">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Hi, ${logedInEmail} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-save-job">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
+				  </ul>
+				</c:if>
+              </li>
             </ul>
           </div>
         </div>
@@ -92,7 +99,7 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
             <div class="col-md-12 text-center mb-5">
-                <p class="breadcrumbs mb-0"><span class="mr-3"><a href="index.html">Trang chủ <i class="ion-ios-arrow-forward"></i></a></span>Chi tiết <span></span></p>
+                <p class="breadcrumbs mb-0"><span class="mr-3"><a href="${pageContext.request.contextPath}">Trang chủ <i class="ion-ios-arrow-forward"></i></a></span>Chi tiết <span></span></p>
                 <h1 class="mb-3 bread">Chi tiết công việc</h1>
             </div>
         </div>
@@ -105,7 +112,7 @@
             <div class="col-lg-8 mb-4 mb-lg-0">
                 <div class="d-flex align-items-center">
                     <div class="border p-2 d-inline-block mr-3 rounded">
-                        <img width="100" height="100" th:src="${recruitment.company.logo}" alt="Image">
+                        <img width="100" height="100" src="${recruitment.company.logo}" alt="Image">
                     </div>
                     <div>
                         <h2></h2>
@@ -144,7 +151,7 @@
                 <div class="mb-5">
 
                     <h3 class="h5 d-flex align-items-center mb-4 text-primary"><span class="icon-align-left mr-3"></span>Mô tả công việc</h3>
-                    <p th:utext="${recruitment.description}"></p>
+                    <p>${recruitment.descript}</p>
                 </div>
 
             </div>
@@ -152,14 +159,14 @@
                 <div class="bg-light p-3 border rounded mb-4">
                     <h3 class="text-primary  mt-3 h5 pl-3 mb-3 ">Tóm tắt công việc</h3>
                     <ul class="list-unstyled pl-3 mb-0">
-                       <li class="mb-2"> <strong class="text-black">Ngày tạo: </strong> <span>14/10/2022</span> </li>
-                        <li class="mb-2"><strong class="text-black">Kiểu công việc: </strong> <span>Java</span></li>
-                        <li class="mb-2"><strong class="text-black">Loại công việc: </strong> <span">Java</span></li>
-                        <li class="mb-2"><strong class="text-black">Kinh nghiệm: </strong> <span>2 nan </span></li>
-                        <li class="mb-2"><strong class="text-black">Đại chỉ: </strong> <span> Ha Noi</span></li>
-                        <li class="mb-2"><strong class="text-black">Lương: </strong> <span> 20000 </span></li>
-                        <li class="mb-2"><strong class="text-black">Số lượng: </strong><span>2</span></li>
-                        <li class="mb-2"><strong class="text-black">Hạn nộp cv: </strong><span>15/10/2023</span></li>
+                       <li class="mb-2"> <strong class="text-black">Ngày tạo: </strong> <span>${recruitment.create_at}</span> </li>
+                        <li class="mb-2"><strong class="text-black">Kiểu công việc: </strong> <span>${recruitment.category.name}</span></li>
+                        <li class="mb-2"><strong class="text-black">Loại công việc: </strong> <span>${recruitment.category.name}</span></li>
+                        <li class="mb-2"><strong class="text-black">Kinh nghiệm: </strong> <span>${recruitment.experience}</span></li>
+                        <li class="mb-2"><strong class="text-black">Đia chỉ: </strong>${recruitment.address}<span> </span></li>
+                        <li class="mb-2"><strong class="text-black">Lương: </strong> <span> ${recruitment.salary} </span></li>
+                        <li class="mb-2"><strong class="text-black">Số lượng: </strong><span>${recruitment.quantity}</span></li>
+                        <li class="mb-2"><strong class="text-black">Hạn nộp cv: </strong><span>${recruitment.deadline}</span></li>
                     </ul>
                 </div>
 
@@ -205,7 +212,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" th:onclick="'apply(' +${recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
+                        <button type="button" onclick="'apply(' +${recruitment.id}+ ')'" class="btn btn-primary">Nộp</button>
                     </div>
                 </div>
             </form>
@@ -227,15 +234,15 @@
         <div th:if="${applyPosts != null}"  class="row">
             <div class="col-lg-12 pr-lg-4">
                 <div class="row">
-                    <th:block th:if="${applyPosts.size() != 0}" th:each="applyPost : ${applyPosts}">
+                    <c:forEach var="applyp" items="${applypost}">
                         <div class="col-md-12" style="box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;">
                             <div class="team d-md-flex p-4 bg-white">
-                                <IMG class="img" th:src="${applyPost.user.image != null ? applyPost.user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
+                                <IMG class="img" src="${applypost.user.image != null ? applypost.user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}"></IMG>
                                 <div class="text pl-md-4">
-                                    <H5 class="location mb-0" th:text="${applyPost.user.fullName}"></H5>
-                                    <p style="display: block;color: black" th:text="${applyPost.user.address}"></p>
-                                    <span class="position" style="display: block;color: black" th:text="${applyPost.user.email}"></span>
-                                    <p class="mb-4" style="width: 700px" th:utext="${applyPost.user.description}">.</p>
+                                    <H5 class="location mb-0"></H5>${applypost.user.fullname}</H5>
+                                    <p style="display: block;color: black">${applypost.user.address}</p>
+                                    <span class="position" style="display: block;color: black">${applypost.user.email}</span>
+                                    <p class="mb-4" style="width: 700px">${applypost.user.descript}</p>
                                     <div class="row">
                                         <p><a href="#" th:if="${applyPost.nameCv != null}" class="btn btn-primary" th:href="${'http://localhost:8080/resources/uploads/'} +${applyPost.nameCv}" >Xem cv</a></p>
                                         <p th:if="${applyPost.status == 0}" style="margin-left: 10px"><a class="btn btn-outline-primary" th:href="${'/user/approve/'} +${applyPost.user.id} +${'/'} +${recruitment.id}" >Duyệt</a></p>
@@ -245,7 +252,7 @@
                                 </div>
                             </div>
                         </div>
-                    </th:block>
+                    </c:forEach>
                     <th:block th:if="${applyPosts.size() == 0}">
                         <p>Chưa có ứng cử viên nào ứng tuyển</p>
                     </th:block>
@@ -309,31 +316,31 @@
                 <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                     <div class="one-third mb-4 mb-md-0">
                         <div class="job-post-item-header align-items-center">
-                            <span class="subadge" th:text="${recruitment.type}"></span>
-                            <h2 class="mr-3 text-black" ><a th:text="${recruitment.title}" th:href="${'/recruitment/detail/'} +${recruitment.id}"></a></h2>
+                            <span class="subadge">fulltime</span>
+                            <h2 class="mr-3 text-black" ><a href="${'/recruitment/detail/'}${recruitment.id}">${recruitment.tittle}</a></h2>
                         </div>
                         <div class="job-post-item-body d-block d-md-flex">
-                            <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${recruitment.Company.nameCompany}" ></a></div>
-                            <div><span class="icon-my_location"></span> <span th:text="${recruitment.address}"></span></div>
+                            <div class="mr-3"><span class="icon-layers"></span> <a href="#"> ${recruitment.company.name_company}</a></div>
+                            <div><span class="icon-my_location"></span> <span> ${recruitment.address}</span></div>
                         </div>
                     </div>
 
-                    <input type="hidden" th:id="${'idRe'}+${recruitment.id}" th:value="${recruitment.id}">
+                    <input type="hidden" id="${'idRe'}${recruitment.id}" value="${recruitment.id}">
                     <div th:if="${session.user}" class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                         <div th:if="${session.user.role.id == 1}">
-                            <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                            <a onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                 <span class="icon-heart"></span>
                             </a>
                         </div>
-                        <a th:if="${session.user.role.id == 1}" data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                        <a th:if="${session.user.role.id == 1}" data-toggle="modal" data-target="${'#exampleModal'}${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                     </div>
                     <div th:unless="${session.user}" class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                         <div >
-                            <a  th:onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                            <a onclick="'save(' +${recruitment.id}+ ')'" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                 <span class="icon-heart"></span>
                             </a>
                         </div>
-                        <a  data-toggle="modal" th:data-target="${'#exampleModal'}+${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
+                        <a  data-toggle="modal" data-target="${'#exampleModal'}${recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                     </div>
                 </div>
             </div><!-- end -->

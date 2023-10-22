@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -51,14 +52,14 @@ public class User {
     @JoinColumn(name="role_id") 
     private Role role;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "cvs")
-    private Set<CV> CVlists;
+    @OneToOne(mappedBy = "users")
+    private CV CVlists;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
     private Set<ApplyPost> listapplyPosts;
-    
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
-    private Set<Company> companies;
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "users")
+    private Company company;
     
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
     private Set<Save_job> save_jobs;
@@ -66,11 +67,13 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private Set<Folow_company> fList;
 
-	public User(int id, String address, String descript, String email, String fullname, String image, String password,
-			String phone, int status, Role role, Set<CV> cVlists, Set<ApplyPost> listapplyPosts,
-			Set<Company> companies, Set<Save_job> save_jobs, Set<Folow_company> fList) {
-		super();
-		this.id = id;
+    public User() {
+
+	}
+
+	public User(String address, String descript, String email, String fullname, String image, String password,
+			String phone, int status, Role role, CV cVlists, Set<ApplyPost> listapplyPosts, Company company,
+			Set<Save_job> save_jobs, Set<Folow_company> fList) {
 		this.address = address;
 		this.descript = descript;
 		this.email = email;
@@ -80,15 +83,14 @@ public class User {
 		this.phone = phone;
 		this.status = status;
 		this.role = role;
-		this.CVlists = cVlists;
+		CVlists = cVlists;
 		this.listapplyPosts = listapplyPosts;
-		this.companies = companies;
+		this.company = company;
 		this.save_jobs = save_jobs;
 		this.fList = fList;
 	}
-    public User() {
 
-	}
+
 
 	public int getId() {
 		return id;
@@ -169,14 +171,18 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
 
-	public Set<Company> getCompanies() {
-		return companies;
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setCompanies(Set<Company> companies) {
-		this.companies = companies;
+
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
+
 
 	public Set<Folow_company> getfList() {
 		return fList;
@@ -186,11 +192,12 @@ public class User {
 		this.fList = fList;
 	}
 
-	public Set<CV> getCVlists() {
+
+	public CV getCVlists() {
 		return CVlists;
 	}
 
-	public void setCVlists(Set<CV> cVlists) {
+	public void setCVlists(CV cVlists) {
 		CVlists = cVlists;
 	}
 

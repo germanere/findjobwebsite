@@ -55,20 +55,20 @@
       
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-              <li class="'nav-item"><a href="/" class="nav-link">Công việc</a></li>
-              <li class="nav-item"><a href="/" class="nav-link">Ứng cử viên</a></li>
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
                 <ul class="dropdown">
-                  <li><a href="/">Hồ Sơ</a></li>
-                  <li ><a href="/save-job/get-list" >Công việc đã lưu</a></li>
-                  <li ><a href="/user/list-post" >Danh sách bài đăng</a></li>
-                  <li ><a href="/user/get-list-apply" >Công việc đã ứng tuyển</a></li>
-                  <li ><a href="/user/get-list-company" >Công ty đã theo dõi</a></li>
-                  <li><a href="/auth/logout" >Đăng xuất</a></li>
+				    <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-jobs">Công việc đã lưu</a></li>
+				    <li><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-apply-job">Công việc đã ứng tuyển</a></li>
+				    <li><a href="${pageContext.request.contextPath}/list-follow-company">Công ty đã theo dõi</a></li>
+				    <li><a href="${pageContext.request.contextPath}/login">Đăng xuất</a></li>
                 </ul>
                 <li></li>
-                <li class="nav-item cta mr-md-1"><a href="/recruitment/post" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/auth/login" class="nav-link">Đăng nhập</a></li>
+        		<li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored"><a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a></li>
             </ul>
           </div>
         </div>
@@ -92,7 +92,7 @@
     <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
             <div class="col-md-12 text-center mb-5">
-                <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Trang chủ <i class="ion-ios-arrow-forward"></i></a></span>Công ty <span></span></p>
+                <p class="breadcrumbs mb-0"><span class="mr-3"><a href="${pageContext.request.contextPath}">Trang chủ <i class="ion-ios-arrow-forward"></i></a></span>Công ty <span></span></p>
                 <h1 class="mb-3 bread">Danh sách công ty đã theo dõi</h1>
             </div>
         </div>
@@ -110,40 +110,41 @@
     </div>
 </div>
 
-<section class="ftco-section bg-light" th:if="${session.user.role.id == 1 }">
+<section class="ftco-section bg-light">
+	<c:if test="${sessionScope.user.role.id == 1 }">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 pr-lg-5">
-                <div th:if="${saveJobList.totalPages > 0}" class="row">
-                    <th:block th:each="saveJob : ${saveJobList.content}">
+            	<c:forEach var="sajo" items="${save_job}">
+                	<div class="row">
                         <div class="col-md-12 ">
                             <div class="job-post-item p-4 d-block d-lg-flex align-items-center">
                                 <div class="one-third mb-4 mb-md-0">
                                     <div class="job-post-item-header align-items-center">
 <!--                                        <span class="subadge" th:text="${saveJob.com.type}"></span>-->
-                                        <h2 class="mr-3 text-black" ><a th:text="${saveJob.company.nameCompany}" th:href="${'/user/detail-company/'}+${saveJob.company.id}"></a></h2>
+                                        <h2 class="mr-3 text-black" ><a href="${pageContext.request.contextPath}${'/detail-company/'}${sajo.recruitment.company.id}">${sajo.recruitment.company.name_company}</a></h2>
                                     </div>
                                     <div class="job-post-item-body d-block d-md-flex">
-                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#" th:text="${saveJob.company.email}" ></a></div>
-                                        <div class="mr-3"><span class="icon-my_location"></span> <span th:text="${saveJob.company.address}"></span></div>
-                                        <div style="margin-left: 10"><span class="icon-my_location"></span> <span th:text="${saveJob.company.phoneNumber}"></span></div>
+                                        <div class="mr-3"><span class="icon-layers"></span> <a href="#">${sajo.recruitment.company.email}</a></div>
+                                        <div class="mr-3"><span class="icon-my_location"></span> <span>${sajo.recruitment.company.address}</span></div>
+                                        <div style="margin-left: 10"><span class="icon-my_location"></span> <span>${sajo.recruitment.company.phone}</span></div>
                                     </div>
                                 </div>
-                                <input type="hidden" th:id="${'idRe'}+${saveJob.company.id}" th:value="${saveJob.company.id}">
+                                <input type="hidden" id="${'idRe/'}${sajo.recruitment.company.id}" value="${sajo.recruitment.company.id}">
                                 <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0" style="width:370px !important;">
                                     <div>
-                                        <a  th:href="${'/user/delete-follow/'}+${saveJob.id}" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                        <a href="${pageContext.request.contextPath}${'/delete-follow/'}${sajo.id}" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                             <span class="icon-delete"></span>
                                         </a>
                                     </div>
-                                    <a th:href="${'/user/detail-company/'}+${saveJob.company.id}" class="btn btn-primary py-2">Chi tiết</a>
-                                    <a th:href="${'/user/company-post/'}+${saveJob.company.id}" class="btn btn-warning py-2 ml-1">Danh sách bài đăng</a>
+                                    <a href="${pageContext.request.contextPath}${'/detail-company/'}${sajo.recruitment.company.id}" class="btn btn-primary py-2">Chi tiết</a>
+                                    <a href="${pageContext.request.contextPath}${'/post-company'}?company_id=${sajo.recruitment.company.id}" class="btn btn-warning py-2 ml-1">Danh sách bài đăng</a>
                                 </div>
                             </div>
                         </div><!-- end -->
-                    </th:block>
+                      </div>
+                    </c:forEach>
 
-                </div>
                 <div style="text-align: center" th:if="${saveJobList.totalPages < 1}">
                     <p style="color:red;">Danh sách trống</p>
                 </div>
@@ -151,11 +152,17 @@
                     <div class="col text-center">
                         <div class="block-27">
                             <ul>
-                                <li th:if="${numberPage>0}"><a th:href="@{/save-job/get-list(page = ${saveJobList.number - 1})}">&lt;</a></li>
-                                <th:block th:each="recruitment,state  : ${recruitmentList}">
-                                    <li th:class="${numberPage == state.index  ? 'active' : null }"><a th:href="@{/save-job/get-list(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
+                                <li>
+                                <c:if test="${numberPage>0}">
+                                	<a href="@{/save-job/get-list(page = ${saveJobList.number - 1})}">&lt;</a>
+                                </c:if>
+                                </li>
+                                 <th:block th:each="recruitment,state  : ${recruitmentList}">
+                              	<c:forEach var="rec" items="${recruitment	}">
+                                    <li th:class="${numberPage == state.index  ? 'active' : null }"><a href="@{/save-job/get-list(page = ${state.index})}" th:text="${state.index + 1}"></a></li>
+                                </c:forEach>                               
                                 </th:block>
-                                <li th:if="${numberPage<saveJobList.totalPages - 1}"><a th:href="@{/save-job/get-list(page = ${saveJobList.number + 1})}">&gt;</a></li>
+                                <li th:if="${numberPage<saveJobList.totalPages - 1}"><a href="@{/save-job/get-list(page = ${saveJobList.number + 1})}">&gt;</a></li>
                             </ul>
                         </div>
                     </div>
@@ -164,6 +171,7 @@
 
         </div>
     </div>
+    </c:if>
 </section>
 <script>
     function save(id){

@@ -20,5 +20,8 @@
 		
 	<mvc:resources mapping="/assets/**"
 		location="/WEB-INF/assets/" />
-
+	
+	<bean id="multipartResolver"   
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
+    
 </beans>

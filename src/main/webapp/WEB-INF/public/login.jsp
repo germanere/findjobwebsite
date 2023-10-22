@@ -58,20 +58,21 @@
     
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
-              <li class="nav-item active"><a href="/PRJ321_ASM02" class="nav-link">Trang chủ</a></li>
-              <li class="'nav-item"><a href="/PRJ321_ASM02/" class="nav-link">Công việc</a></li>
-              <li class="nav-item"><a href="/PRJ321_ASM02/list-users" class="nav-link">Ứng cử viên</a></li>
+              <li class="nav-item active"><a href="${pageContext.request.contextPath}" class="nav-link">Trang chủ</a></li>
+              <li class="'nav-item"><a href="${pageContext.request.contextPath}" class="nav-link">Công việc</a></li>
+              <li class="nav-item"><a href="${pageContext.request.contextPath}/list-users" class="nav-link">Ứng cử viên</a></li>
     <!--        <li class="nav-item"><a href="blog.html" class="nav-link">Công ty</a></li>-->
     <!-- 
             <li th:if="${session.user}" class="nav-item"><a th:href="@{'/user/profile/'+${session.user.id}}" th:text="${session.user.fullName}" class="nav-link" ></a> -->
     
               <ul class="dropdown">
-                <li><a href="/">Hồ Sơ</a></li>
+                <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
     <!--            <li><a href="service-single.html">Đổi mật khẩu</a></li>-->
-                  <li ><a href="/PRJ321_ASM02/list-apply-jobs" >Công việc đã lưu</a></li>
-                  <li ><a href="/PRJ321_ASM02/post-list">Danh sách bài đăng</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-apply-job" >Công việc đã ứng tuyển</a></li>
-                  <li ><a href="/PRJ321_ASM02/list-follow-company" >Công ty đã theo dõi</a></li>
+                  <li><a href="${pageContext.request.contextPath}/profile">Hồ Sơ</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/list-apply-jobs" >Công việc đã lưu</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/post-list">Danh sách bài đăng</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/list-apply-job" >Công việc đã ứng tuyển</a></li>
+                  <li ><a href="${pageContext.request.contextPath}/list-follow-company" >Công ty đã theo dõi</a></li>
     <!--            <li th:if="${session.user.role.id == 2}"><a href="/auth/logout" >Ứng cử viên tiềm năng</a></li>-->
                   <li><a href="/PRJ321_ASM02/login" >Đăng xuất</a></li>		
     
@@ -80,8 +81,8 @@
     
               <li></li>
     
-                <li class="nav-item cta mr-md-1"><a href="/PRJ321_ASM02/recruitment" class="nav-link">Đăng tuyển</a></li>
-              <li class="nav-item cta cta-colored"><a href="/PRJ321_ASM02/login" class="nav-link">Đăng nhập</a></li>
+                <li class="nav-item cta mr-md-1"><a href="${pageContext.request.contextPath}/recruitment" class="nav-link">Đăng tuyển</a></li>
+              <li class="nav-item cta cta-colored"><a href="${pageContext.request.contextPath}/login" class="nav-link">Đăng nhập</a></li>
     
           </ul>
         </div>
@@ -124,7 +125,7 @@
   </script>
 </div>
 <!-- HOME -->
-<section class="section-hero overlay inner-page bg-image" style="background-image: url('images/hero_1.jpg');" id="home-section">
+<section class="section-hero overlay inner-page bg-image" style="background-image: url('${pageContext.request.contextPath}/assets/images/hero_1.jpg');" id="home-section">
   <div class="container">
     <div class="row">
       <div class="col-md-7">

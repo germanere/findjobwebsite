@@ -1,6 +1,7 @@
 package com.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +18,7 @@ public class userService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
 
 	@Transactional
 	public List<User> getUsers(){
@@ -33,14 +35,28 @@ public class userService {
         userRepository.save(theuser);
     }
     
-    public User findByEmail (String email) {
-    	List<User> users = userRepository.findAll();
-    	for(User user :users) {
-    		if(user.getEmail().equalsIgnoreCase(email)) {
-    			return user;
-    		}
-    	}
-    	return null;
+    
+    public User findByEmail2 (String email) {
+    	return userRepository.findByEmail(email);
     }
-
+    
+    public User findByIdUser (Integer id) {
+    	return userRepository.findById(id).get();
+    }
+    
+	@Transactional
+	public void updateUser(int userId,String email,String fullName,String address,String phone,String descript) {
+		Optional<User> result = userRepository.findById(userId);
+		if (result.isPresent()) {
+			User user = result.get();
+			user.setEmail(email);
+			user.setFullname(fullName);
+			user.setAddress(address);
+			user.setPhone(phone);
+			user.setDescript(descript);
+			
+			userRepository.save(user);
+			System.out.println("Update user successfully");
+		}
+	}
 }
