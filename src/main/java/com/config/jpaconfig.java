@@ -1,4 +1,4 @@
-qpackage com.config;
+package com.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
