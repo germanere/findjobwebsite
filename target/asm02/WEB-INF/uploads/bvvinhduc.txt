@@ -1,0 +1,297 @@
+Current configuration : 6920 bytes
+!
+! Last configuration change at 11:00:47 UTC Mon Jan 22 2018
+! NVRAM config last updated at 11:01:28 UTC Mon Jan 22 2018
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service compress-config
+!
+hostname C3650_T
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt-vrf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+enable secret 5 $1$r1rc$/NmIoNPeo.3ilIXrIBVzp/
+!
+no aaa new-model
+switch 1 provision ws-c3650-24ts
+!
+!
+!
+!
+!
+ip routing
+!
+ip dhcp excluded-address 172.18.0.1 172.18.0.255
+!
+ip dhcp pool WIFI-KHACH
+ network 172.18.0.0 255.255.0.0
+ default-router 172.18.0.1
+ dns-server 8.8.8.8 8.8.4.4
+!
+!
+qos queue-softmax-multiplier 100
+!
+crypto pki trustpoint TP-self-signed-1332198769
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1332198769
+ revocation-check none
+ rsakeypair TP-self-signed-1332198769
+!
+!
+crypto pki certificate chain TP-self-signed-1332198769
+ certificate self-signed 01
+  3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 31333332 31393837 3639301E 170D3136 30393130 31353534
+  31365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 33333231
+  39383736 3930819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281
+  8100B501 BC29BEBB 7D71AEC0 69A39AF1 51AF91DD 9BA1D04B 5A22022D 36E6DA07
+  0A49CA40 BB477796 9053DCDB BBA1278C D7CBF902 2088AB02 78223524 D684BAE2
+  717D836C 634703DC BACA4FA3 B14F848B CBE5DF70 3E3BBC38 C888C06D CAFA0CDE
+  AFB6662E B319A5F6 310BA323 C97834C7 588A21B0 57A267D7 BEDD0C4F 00C2BC03
+  65230203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603
+  551D2304 18301680 14826134 DC0EE5C4 F84A6B44 1FD727D3 82B9CE6B BE301D06
+  03551D0E 04160414 826134DC 0EE5C4F8 4A6B441F D727D382 B9CE6BBE 300D0609
+  2A864886 F70D0101 05050003 8181004F 7C9B0FC5 A5AEAD47 AB67B685 8194FEDB
+  16301E37 CB1EBB5E 49FF0868 03169C06 0D1A580B 37DA93D9 906D7D49 20F74669
+  7B8599C4 C0CAE491 DA0214B3 012F672C 6A7B4733 87CA741C C97475F4 7A492813
+  70A36C49 A8839CBB 4A5945AB 709940BC FEABEDB7 BC4A6F4D CEEFBA38 5FE110DF
+  1329A588 3009B8B8 394A81CE F72414
+        quit
+diagnostic bootup level minimal
+spanning-tree mode pvst
+spanning-tree extend system-id
+hw-switch switch 1 logging onboard message level 3
+!
+redundancy
+ mode sso
+!
+!
+!
+class-map match-any non-client-nrt-class
+!
+policy-map port_child_policy
+ class non-client-nrt-class
+  bandwidth remaining ratio 10
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ vrf forwarding Mgmt-vrf
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet1/0/1
+ description *****KET NOI SERVER M2*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/2
+ description *****KET NOI SERVER M2*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/3
+ switchport mode access
+!
+interface GigabitEthernet1/0/4
+ switchport mode access
+!
+interface GigabitEthernet1/0/5
+ description *** KHONG CAM DAY MANG **
+ switchport mode access
+!
+interface GigabitEthernet1/0/6
+ description ***** WIFI KHACH TANG 2 *****
+ switchport access vlan 17
+ switchport mode access
+!
+interface GigabitEthernet1/0/7
+ description ****** KET NOI MAY CHU BACKUP HP GEN8 ******
+ switchport mode access
+!
+interface GigabitEthernet1/0/8
+ switchport access vlan 17
+ switchport mode access
+!
+interface GigabitEthernet1/0/9
+ switchport mode trunk
+!
+interface GigabitEthernet1/0/10
+ switchport access vlan 17
+ switchport mode access
+!
+interface GigabitEthernet1/0/11
+ description *****KET NOI WIFI VIETTEL 192.168.12.254*****
+ switchport access vlan 12
+ switchport mode access
+!
+interface GigabitEthernet1/0/12
+ description *****KET NOI SWITCH RUBI WIFI KHACH*****
+ switchport access vlan 12
+ switchport mode access
+!
+interface GigabitEthernet1/0/13
+ description *****KET NOI CAMERA IP HD*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/14
+ description *****KET NOI SERVER M4****
+ switchport mode access
+!
+interface GigabitEthernet1/0/15
+ description *****KET NOI SERVER M4****
+ switchport mode access
+!
+interface GigabitEthernet1/0/16
+ description *****KET NOI CAP 103 - SWITCH 1.2*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/17
+ description *****KET NOI CAP 101 - SWITCH 1.3*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/18
+ description *****KET NOI CAP 201 - SWITCH 1.4*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/19
+ description *****KET NOI CAP 301 - SWITCH 1.5*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/20
+ description *****KET NOI CAP 401 - SWITCH 1.6*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/21
+ description *****KET NOI SWITCH PHONG KY THUAT*****
+ switchport access vlan 12
+ switchport mode access
+!
+interface GigabitEthernet1/0/22
+ description *****KET NOI CAP 403 - SWITCH 1.7*****
+ switchport mode access
+!
+interface GigabitEthernet1/0/23
+ description **** SAN V3700 ****
+ switchport mode access
+!
+interface GigabitEthernet1/0/24
+ description *****KET NOI FIREWALL ASA*****
+ switchport access vlan 15
+ switchport mode access
+!
+interface GigabitEthernet1/1/1
+!
+interface GigabitEthernet1/1/2
+!
+interface GigabitEthernet1/1/3
+!
+interface GigabitEthernet1/1/4
+!
+interface Vlan1
+ ip address 192.168.1.1 255.255.255.0
+!
+interface Vlan11
+ ip address 192.168.11.1 255.255.255.0
+!
+interface Vlan12
+ ip address 192.168.12.1 255.255.255.0
+ ip helper-address 192.168.1.253
+!
+interface Vlan14
+ ip address 192.168.14.1 255.255.255.0
+!
+interface Vlan15
+ ip address 172.31.0.1 255.255.255.0
+!
+interface Vlan16
+ ip address 192.168.16.1 255.255.255.0
+!
+interface Vlan17
+ ip address 172.18.0.1 255.255.0.0
+ ip access-group WIFI-KHACH in
+!
+interface Vlan18
+ ip address 192.168.18.1 255.255.255.0
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 172.31.0.254
+!
+ip access-list extended WIFI-KHACH
+ permit udp any any eq bootps
+ permit udp any any eq bootpc
+ permit ip host 172.18.0.2 192.168.0.0 0.0.255.255
+ permit ip host 172.18.0.3 192.168.0.0 0.0.255.255
+ deny   ip 172.18.0.0 0.0.255.255 192.168.0.0 0.0.255.255
+ permit ip any any
+!
+!
+!
+!
+line con 0
+ password 7 13070116001A00
+ logging synchronous
+ login
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ password 7 08235A4A020F01
+ login
+line vty 5 15
+ password 7 08235A4A020F01
+ login
+!
+wsma agent exec
+ profile httplistener
+ profile httpslistener
+!
+wsma agent config
+ profile httplistener
+ profile httpslistener
+!
+wsma agent filesys
+ profile httplistener
+ profile httpslistener
+!
+wsma agent notify
+ profile httplistener
+ profile httpslistener
+!
+!
+wsma profile listener httplistener
+ transport http
+!
+wsma profile listener httpslistener
+ transport https
+!
+ap group default-group
+end
