@@ -10,7 +10,6 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -54,6 +53,24 @@ public class jpaconfig {
         return hibernateProperties;
     }
 
+//    @Bean
+//    public DataSource dataSource() {
+//        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        String url = System.getenv("DB_URL");
+//        String user = System.getenv("DB_USERNAME");
+//        String pass = System.getenv("DB_PASSWORD");
+//        
+//        System.out.println("- DB_URL: " + url);
+//        System.out.println("- DB_USERNAME: " + user);
+//        System.out.println("- DB_PASSWORD: " + pass);
+//
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl(url);
+//        dataSource.setUsername(user);
+//        dataSource.setPassword(pass);
+//        return dataSource;
+//    }
+    
     @Bean
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
