@@ -1,4 +1,4 @@
-qpackage com.config;
+package com.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,9 +60,9 @@ public class jpaconfig {
       String user = System.getenv("DB_USERNAME");
       String pass = System.getenv("DB_PASSWORD");
       
-      System.out.println("- DB_URL: " + url);
-      System.out.println("- DB_USERNAME: " + user);
-      System.out.println("- DB_PASSWORD: " + pass);
+      System.out.println("DB_URL: " + url);
+      System.out.println("DB_USERNAME: " + user);
+      System.out.println("DB_PASSWORD: " + pass);
 
       dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
       dataSource.setUrl(url);

@@ -20,7 +20,6 @@ com\service\CustomUserDetailService.class
 com\service\savejobService.class
 com\repository\UserRepository.class
 com\service\roleService.class
-com\config\jpaconfig.class
 com\util\AuthUtil.class
 com\service\categoryService.class
 com\service\companyService.class
