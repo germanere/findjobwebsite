@@ -55,31 +55,21 @@ public class jpaconfig {
 
     @Bean
     public DataSource dataSource() {
-        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        String url = System.getenv("DB_URL");
-        String user = System.getenv("DB_USERNAME");
-        String pass = System.getenv("DB_PASSWORD");
-        
-        System.out.println("- DB_URL: " + url);
-        System.out.println("- DB_USERNAME: " + user);
-        System.out.println("- DB_PASSWORD: " + pass);
+      final DriverManagerDataSource dataSource = new DriverManagerDataSource();
+      String url = System.getenv("DB_URL");
+      String user = System.getenv("DB_USERNAME");
+      String pass = System.getenv("DB_PASSWORD");
+      
+      System.out.println("- DB_URL: " + url);
+      System.out.println("- DB_USERNAME: " + user);
+      System.out.println("- DB_PASSWORD: " + pass);
 
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl(url);
-        dataSource.setUsername(user);
-        dataSource.setPassword(pass);
-        return dataSource;
+      dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+      dataSource.setUrl(url);
+      dataSource.setUsername(user);
+      dataSource.setPassword(pass);
+      return dataSource;
     }
-    
-//    @Bean
-//    public DataSource dataSource() {
-//        final DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/asm02?useSSL=true");
-//        dataSource.setUsername("root");
-//        dataSource.setPassword("@Ducnt24");
-//        return dataSource;
-//    }
 
     @Bean
     public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
