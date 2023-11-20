@@ -31,6 +31,8 @@ The project utilizes the following technologies:
 -Lock/unlock the patient's account
 -Add doctor's account
 
+## Demo Link :
+
 ## Deployment Instructions
 To deploy the project on your local machine, follow these steps:
 
