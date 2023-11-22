@@ -109,8 +109,6 @@ public class UserController {
 			@RequestParam("idrec") String idr,
 			@RequestParam("text11") String text, 
 			@RequestParam("multipartFile") MultipartFile file){
-//		@ModelAttribute applypostDTO applypostDTO){	
-		
 		 String filePath = "C:\\Users\\Admin\\eclipse-workspace\\PRJ321_ASM02\\src\\main\\webapp\\WEB-INF\\uploads";
 		 Path fileNameString = Paths.get(filePath, StringUtils.cleanPath(file.getOriginalFilename()));
 	    	try {
@@ -131,15 +129,6 @@ public class UserController {
 		
 		applypostservice.saveApplypost(applypostN);
 		System.out.println("apply post successfully! ");
-			
-//		else {
-//		applypostN.setStatus(1);
-//		User user = userService.findByIdUser(Integer.valueOf(idU));
-//		Recruitment recruitment = recruitmentService.findbyid(Integer.valueOf(idr));
-//		applypostN.setText(text);
-		
-//		ap
-//		}
 		return "redirect:/";
 		
 	}
@@ -334,6 +323,16 @@ public class UserController {
 		return "profile";
 	}
 	
+    @PostMapping("/confirm-account")
+    public String confirmAccount(@RequestParam("email") String email,Model model) {
+    	boolean emailExist = userService.isEmailExists(email);
+    	
+        // Gửi email xác nhận tới địa chỉ email
+        AuthUtil.sendConfirmationEmail(email);
+        model.addAttribute("comfirm_await", emailExist);
+
+        return "redirect:/profile";
+    }
 	
 	@PostMapping("/result-searchs")
 	public String resultsearch(@RequestParam("keySearch") String keyword,Model model) {

@@ -35,11 +35,16 @@ public class userService {
         userRepository.save(theuser);
     }
     
-    
+    @Transactional
     public User findByEmail2 (String email) {
     	return userRepository.findByEmail(email);
     }
-    
+    @Transactional
+    public boolean isEmailExists(String email) {
+        User user = userRepository.findByEmail(email);
+        return user != null;
+    }
+    @Transactional
     public User findByIdUser (Integer id) {
     	return userRepository.findById(id).get();
     }

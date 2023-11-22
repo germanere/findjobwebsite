@@ -14,6 +14,6 @@ import com.entity.Company;
 public interface CompanyRepository extends JpaRepository<Company, Integer>{
 	Company findById(int id);
 	
-	@Query(value = "SELECT * from asm02.company WHERE name_company LIKE %:keyword% ", nativeQuery = true)
+	@Query(value = "SELECT * from 	company WHERE name_company LIKE %:keyword% ", nativeQuery = true)
 	public List<Company> search(@Param("keyword") String keyword);
 }
