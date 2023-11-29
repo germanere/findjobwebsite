@@ -97,7 +97,7 @@ public class UserController {
 		newUser.setEmail(userdto.getEmail());
 		newUser.setFullname(userdto.getFullname());
 		newUser.setPassword(new BCryptPasswordEncoder().encode(userdto.getPassword()));
-		newUser.setStatus(1);
+		newUser.setStatus(0);
 		Role role = roleService.getRole(userdto.getRole_id());
 		newUser.setRole(role);
 		userService.saveUser(newUser);
@@ -117,7 +117,6 @@ public class UserController {
 				e.printStackTrace();
 			}
 		ApplyPost applypostN = new ApplyPost();
-//		if(applypostN.getName_cv()==null) {	
 		User user = userService.findByIdUser(Integer.valueOf(idU));
 		applypostN.setUsers(user);	
 		Recruitment recruitment = recruitmentService.findbyid(Integer.valueOf(idr));
@@ -326,11 +325,12 @@ public class UserController {
     @PostMapping("/confirm-account")
     public String confirmAccount(@RequestParam("email") String email,Model model) {
     	boolean emailExist = userService.isEmailExists(email);
-    	
+    	User user = userService.findByEmail2(email);
         // Gửi email xác nhận tới địa chỉ email
-        AuthUtil.sendConfirmationEmail(email);
+        AuthUtil.sendConfirmationEmail(user);
         model.addAttribute("comfirm_await", emailExist);
-
+        user.setStatus(1);
+        userService.saveUser(user);
         return "redirect:/profile";
     }
 	

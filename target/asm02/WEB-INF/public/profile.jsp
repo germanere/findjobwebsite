@@ -84,8 +84,6 @@
       </div>
 </nav>
 
-
-
 <div class="hero-wrap hero-wrap-2" style="background-image: url('${pageContext.request.contextPath}/assets/images/bg_1.jpg');" data-stellar-background-ratio="0.5">
     <div class="overlay"></div>
     <div class="container">
@@ -93,9 +91,11 @@
             <div class="col-md-12 text-center mb-5">
                 <h1 class="mb-3 bread">Hồ sơ </h1>
                 <div class="form-group">
+                  <form method="post" action="uploadfile" enctype="multipart/form-data">
                     <label class="btn btn-primary btn-md btn-file">
-                        Chọn ảnh<input type="file" name="image" id="fileUpload" hidden>
+                        Chọn ảnh<input type="file" name="image" id="fileUpload1" hidden>
                     </label>
+                    </form>
                 </div>
                 <div style="margin-left: 0px" id="divImage" >
                     <img id="avatar" height	="100" width="100" style="border-radius: 50px" src="${user.image != null ? user.image : 'https://st.quantrimang.com/photos/image/072015/22/avatar.jpg'}">
@@ -105,21 +105,25 @@
     </div>
 </div>
 <!-- HOME -->
-<div th:if="${userInformation.status == 0}" class="container-fluid" style="text-align: center">
+<c:if test ="${user.status == 0}">
+<div class="container-fluid" style="text-align: center">
     <p style="font-size: 20px;font-weight: bold;color: #aaa;margin-top: 10px">Xác thực email đăng nhập</p>
     <div style="width: 600px;height: 400px;border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;padding: 15px">
         <p style="line-height: 35px;font-size: 16px">Xin chào, <span>${user.fullname}"</span> và làm theo hướng dẫn trong email.
             Trường hợp không nhận được email, bạn vui lòng bấm nút Nhận email xác thực dưới đây.</p>
         <div class="row form-group">
-            <form action="/user/confirm-account" method="post" class="col-md-12">
+            <form action="confirm-account" method="post" class="col-md-12">
+                <input type="hidden" value="${user.email}" name="email" class="btn px-4 btn-primary text-white">
+                <input type="submit" value="Nhận email xác thực" class="btn px-4 btn-primary text-white">
             </form>
         </div>
         <p>Mọi thắc mắc vui lòng liên hệ bộ phận CSKH của WorkCV:<br></p>
         - Điện thoại:<span style="color:#5f80ec">(024) 6680 5588</span><br>
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
-    <div th:if="${comfirm_await}" style="width: 600px;height: 400px;border-radius: 5px;
+    <c:if test="${comfirm_await}">
+    <div style="width: 600px;height: 400px;border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 0px 10px;margin: 20px auto;padding: 15px">
         <p style="line-height: 35px;font-size: 16px">Xin chào, <span> ${user.fullname}" ></span> .Bạn đã gửi yêu cầu xác thực thành công,
             vui lòng kiểm tra mail để xác thực.Cảm ơn bạn!!!
@@ -128,7 +132,9 @@
         - Điện thoại:<span style="color:#5f80ec">(024) 6680 5588</span><br>
         - Email: <a href="#" style="color:#5f80ec"> hotro@workcv.vn</a>
     </div>
+    </c:if>
 </div>
+</c:if>
 <section class="site-section" style="margin-top: 10px">
 	<c:if test="${user.status == 1 && user.role.id == 1}">
     <div class="container">

@@ -1,11 +1,8 @@
 package com.controller;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,7 +21,7 @@ public class FileUploadController {
                MultipartFile file, HttpSession s,
                Model mod)
     {
-    String filePath = "C:\\Users\\Admin\\eclipse-workspace\\PRJ321_ASM02\\src\\main\\webapp\\WEB-INF\\uploads";
+    String filePath = "C:\\Users\\Admin\\Documents";
     	System.out.println(filePath);
     	try {
     		file.transferTo(Paths.get(filePath, StringUtils.cleanPath(file.getOriginalFilename())));

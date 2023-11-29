@@ -18,7 +18,6 @@ public class userService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
 
 	@Transactional
 	public List<User> getUsers(){
@@ -29,7 +28,7 @@ public class userService {
     public void deleteUser(int theId) {
         userRepository.deleteById(theId);
     }
-    
+
     @Transactional
     public void saveUser(User theuser) {
         userRepository.save(theuser);
