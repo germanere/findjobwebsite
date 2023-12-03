@@ -178,7 +178,6 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="row">
-
                         <div class="col-6">
                             <button type="submit" class="btn btn-block btn-primary btn-md">Lưu thông tin</button>
                         </div>
@@ -243,46 +242,44 @@
         </div>
     </div>
 </div>
+
 <section class="site-section" style="margin-top: 10px">
 	<c:if test="${user.status == 1 && user.role.id == 2}">
     <div class="container">
         <div class="row">
+        
             <div class="col-lg-6 mb-5">
                 <h2 class="mb-4">Thông tin cá nhân</h2>
                 <form action="updateuser" method="post" >
 				<input type="hidden" name="idUser" value="${user.id}">
                     <div class="row mb-5">
                         <div class="col-lg-12">
-                            <div class="p-4 p-md-5 border rounded">
-                                <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"  required placeholder="you@yourdomain.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="job-title">Họ và tên</label>
-                                    <input type="text" class="form-control" name="fullName" id="job-title" required placeholder="Full name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="job-location">Địa chỉ</label>
-                                    <input type="text" name="address" required class="form-control" id="job-location" placeholder="e.g. New York">
-                                </div>
-                                <div class="form-group">
-                                    <label for="job-location">Số điện thoại</label>
-                                    <input type="text" name="phoneNumber" required class="form-control" id="job-location" placeholder="+ 84">
-                                </div>
-                                <div class="form-group">
-                                    <label for="job-location">Mô tả bản thân</label>
-                                    <textarea  name="description" class="form-control" id="editor" placeholder="Mô tả"></textarea>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-md-12">
-                                        <input type="submit" value="Lưu thông tin" class="btn px-4 btn-primary text-white">
-                                    </div>
-                                </div>
-                            </div>
-
+                    <div class="p-4 p-md-5 border rounded">
+                    	<input type="hidden" name="idUser" value="${user.id}">
+                        <h3 class="text-black mb-5 border-bottom pb-2">Thông tin chi tiết</h3>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="${user.email != null ? user.email : null}" required placeholder="you@yourdomain.com">
                         </div>
-
+                        <div class="form-group">
+                            <label for="job-title">Full name</label>
+                            <input type="text" class="form-control" name="fullname" value="${user.fullname != null ? user.fullname : null}" required id="job-title" placeholder="Full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="job-location">Địa chỉ</label>
+                            <input type="text" name="address"  class="form-control" id="job-location" value="${user.address != null ? user.address : null}" required placeholder="e.g. New York">
+                        </div>
+                        <div class="form-group">
+                            <label for="job-location">Số điện thoại</label>
+                            <input type="text" name="phoneNumber"  class="form-control" id="job-location" value="${user.phone != null ? user.phone : null}" required placeholder="+ 84">
+                        </div>
+                        <div class="form-group">
+                            <label for="job-location">Mô tả bản thân</label>
+                            <textarea  name="description" class="form-control" id="editor" placeholder="Mô tả">${user.descript != null ? user.descript : null}</textarea>
+                        </div>
+                         <button type="submit" class="btn btn-block btn-primary btn-md">Lưu thông tin</button>
+                    </div>
+                        </div>
                     </div>
                 </form>
             </div>

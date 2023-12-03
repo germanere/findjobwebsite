@@ -135,12 +135,14 @@
                                         <div><span class="icon-my_location"></span> <span>${sajo.recruitment.address}</span></div>
                                     </div>
                                 </div>
-                                <input type="hidden" id="${'idRe'}${sajo.recruitment.id}" value="${sajo.recruitment.id}">
+                                <input type="hidden" id="${'idRe'}${sajo.recruitment.id}" value="${sajo.recruitment.id}" >
                                 <div class="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
                                     <div>
-                                        <a href="${'/save-job/delete/'}${sajo.id}" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
+                                    	<form method=post action="save-job/delete/{id}">
+                                        <a href="${pageContext.request.contextPath}${'/save-job/delete/'}${sajo.id}" class="icon text-center d-flex justify-content-center align-items-center icon mr-2">
                                             <span class="icon-delete"></span>
                                         </a>
+                                        </form>
                                     </div>
                                     <a data-toggle="modal"data-bs-target="${'#exampleModal'}${sajo.recruitment.id}" class="btn btn-primary py-2">Apply Job</a>
                                 </div>

@@ -209,14 +209,13 @@ public class UserController {
 			@RequestParam("address")String address,
 			@RequestParam("phoneNumber")String phone,
 			@RequestParam("description")String descript) {
-		
+	
 		User currentUser = (User) session.getAttribute("user");
 		if (currentUser == null) {
 			throw new IllegalAccessError("User not login");
 		}		
 		Company company = currentUser.getCompany();
 		companyservice.updatecompa(company, email, nameC, address, phone, descript);
-
 		return "redirect:/profile";
 	}
 	
@@ -318,8 +317,12 @@ public class UserController {
 	
 	@GetMapping("/profile")
 	public String profiles() {
-		
 		return "profile";
+	}
+	@PostMapping("/save-job/delete/{id}")
+	public String delsavejob(@PathVariable int id) {
+		save_jobService.delsavejob(id);
+		return "redirect:/list-save-job";
 	}
 	
     @PostMapping("/confirm-account")

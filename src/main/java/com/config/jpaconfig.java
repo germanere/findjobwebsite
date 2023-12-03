@@ -57,9 +57,9 @@ public class jpaconfig {
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://mysql-155597-0.cloudclusters.net:19856/asm02?useSSL=true");
+        dataSource.setUrl("jdbc:mysql://mysql-156389-0.cloudclusters.net:10050/asm02?useSSL=true");
         dataSource.setUsername("admin");
-        dataSource.setPassword("qiA0vIUC");
+        dataSource.setPassword("SM1BZH94");
         return dataSource;
     }
 
