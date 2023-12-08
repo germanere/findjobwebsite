@@ -28,8 +28,8 @@ The project utilizes the following technologies:
 - Lock/unlock the doctor's account
 
 ### For Admin:
--Lock/unlock the patient's account
--Add doctor's account
+- Lock/unlock the patient's account
+- Add doctor's account
 
 ## Demo Link : https://findjobwebapp-nlmetolt6a-as.a.run.app/asm02
 
