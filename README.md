@@ -34,7 +34,7 @@ The project utilizes the following technologies:
 ## Demo Link : https://findjobwebapp-nlmetolt6a-as.a.run.app/asm02
 
 ## Deployment Instructions
-To deploy the project on your local machine, follow these steps:
+1.To deploy the project on your local machine, follow these steps:
 
 - Step 1: Install Java Development Kit (JDK) and MySQL on your computer.
 - Step 2: Use the SQL script provided in the "sql script" folder to set up the database.
@@ -42,3 +42,8 @@ To deploy the project on your local machine, follow these steps:
 - Step 4: Configure the database connection by modifying the information in the "jpaconfig.java" file to match your configuration.
 - Step 5: Run the application on the server (preferably Tomcat 9).
 - Step 6: Using postman to get API
+
+2.Deploy by using dockerfile
+- Step 1 : if you using window ,download docker desktop
+- Step 2 : use command docker build -t abc(name of project) .
+- Step 3 : Open Docker Desktop , and run it with port 8080
